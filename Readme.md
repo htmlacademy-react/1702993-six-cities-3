@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Денис Швырев](https://up.htmlacademy.ru/react-individual/3/user/1702993).
-* Наставник: `Неизвестно`.
+* Наставник: [Антон Ткачук](https://htmlacademy.ru/profile/id2397393).
 
 ---
 
