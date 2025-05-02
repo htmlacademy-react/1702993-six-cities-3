@@ -1,4 +1,4 @@
-function LoginPage () {
+function LoginPage (): JSX.Element {
   return(
     <div className="page page--gray page--login">
       <header className="header">
@@ -42,4 +42,4 @@ function LoginPage () {
   );
 }
 
-export default {LoginPage};
+export default LoginPage;
