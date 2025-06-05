@@ -19,7 +19,7 @@ export const offersPage: TOfferPage[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -33,7 +33,7 @@ export const offersPage: TOfferPage[] = [
       isPro: false
     },
     images: [
-      '../../public/img/amsterdam.jpg'
+      '../../public/img/apartment-01.jpg'
     ],
     maxAdults: 4
   },
@@ -69,7 +69,7 @@ export const offersPage: TOfferPage[] = [
       isPro: false
     },
     images: [
-      '../../public/img/amsterdam.jpg'
+      '../../public/img/apartment-small-03.jpg'
     ],
     maxAdults: 4
   },
@@ -77,7 +77,7 @@ export const offersPage: TOfferPage[] = [
     id: '3',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 20,
+    price: 110,
     city: {
       name: 'Amsterdam',
       location: {
@@ -91,7 +91,7 @@ export const offersPage: TOfferPage[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -105,7 +105,7 @@ export const offersPage: TOfferPage[] = [
       isPro: false
     },
     images: [
-      '../../public/img/amsterdam.jpg'
+      '../../public/img/apartment-02.jpg'
     ],
     maxAdults: 4
   },
@@ -113,7 +113,7 @@ export const offersPage: TOfferPage[] = [
     id: '4',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 11120,
+    price: 120,
     city: {
       name: 'Amsterdam',
       location: {
@@ -141,7 +141,7 @@ export const offersPage: TOfferPage[] = [
       isPro: false
     },
     images: [
-      '../../public/img/amsterdam.jpg'
+      '../../public/img/apartment-01.jpg'
     ],
     maxAdults: 4
   }

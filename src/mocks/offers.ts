@@ -22,13 +22,13 @@ export const offers: OfferValue[] = [
     isFavorite: true,
     isPremium: false,
     rating: 4,
-    previewImage: '../../public/img/amsterdam.jpg'
+    previewImage: '../../public/img/apartment-01.jpg'
   },
   {
     id: '2',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 120,
+    price: 920,
     city: {
       name: 'Amsterdam',
       location: {
@@ -67,7 +67,7 @@ export const offers: OfferValue[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 2,
+    rating: 4,
     previewImage: '../../public/img/apartment-02.jpg'
   },
   {

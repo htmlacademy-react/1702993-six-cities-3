@@ -17,7 +17,7 @@ function PlaceCard({offer, handleOffer}: OfferCardProps): JSX.Element {
   };
 
   return (
-    <Link to={`offer/${offer.id}`}>
+    <Link to={`/offer/${offer.id}`}>
       <article className="cities__card place-card"
         onMouseEnter={handleHover}
         onMouseLeave={handleUnHover}
