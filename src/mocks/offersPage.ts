@@ -5,7 +5,7 @@ export const offersPage: TOfferPage[] = [
     id: '1',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
-    price: 120,
+    price: 150,
     city: {
       name: 'Amsterdam',
       location: {

@@ -1,4 +1,4 @@
-import OfferCard from '../place-card/place-card';
+import OfferCard from '../offer-card/offer-card';
 import { Fragment, useEffect, useState } from 'react';
 import { OfferValue } from '../../types/offer';
 import { Nullable } from 'vitest';

@@ -30,7 +30,9 @@ function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <FavoritePage />
+              {<FavoritePage
+                offers={offers}
+              />}
             </PrivateRoute>
           }
         />

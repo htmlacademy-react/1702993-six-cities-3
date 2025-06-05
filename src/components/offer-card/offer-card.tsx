@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import { OfferValue } from '../../types/offer';
 import { AppRoute } from '../const';
 
-type PlaceCardProps = {
+type OfferCardProps = {
   offer: OfferValue;
-  variant?: 'vertical' | 'horizontal';
+  variant?: 'cities__card' | 'favorites__card';
   handleOffer: (offer?: OfferValue) => void;
 }
 
-function PlaceCard({offer, handleOffer}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, handleOffer}: OfferCardProps): JSX.Element {
   const handleHover = () => {
     handleOffer(offer);
   };

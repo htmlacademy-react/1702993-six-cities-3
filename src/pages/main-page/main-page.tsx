@@ -1,4 +1,4 @@
-import OfferCard from '../../components/place-card/place-card';
+import OfferCard from '../../components/offer-card/offer-card';
 import CardsList from '../../components/cards-list/cards-list';
 import { OfferValue } from '../../types/offer';
 
