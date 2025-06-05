@@ -1,10 +1,13 @@
-import GetCard from '../../components/place-card/place-card';
+import OfferCard from '../../components/offer-card/offer-card';
+import CardsList from '../../components/cards-list/cards-list';
+import { OfferValue } from '../../types/offer';
 
 type MainPageProps = {
   offersRentalCount: number;
+  offers: OfferValue[];
 }
 
-function MainPage({offersRentalCount}: MainPageProps): JSX.Element {
+function MainPage({offersRentalCount, offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,12 +98,7 @@ function MainPage({offersRentalCount}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <GetCard/>
-                <GetCard/>
-                <GetCard/>
-                <GetCard/>
-                <GetCard/>
-                <GetCard/>
+                <CardsList offers={offers}/>
               </div>
             </section>
             <div className="cities__right-section">
