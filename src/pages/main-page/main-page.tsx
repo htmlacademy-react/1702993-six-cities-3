@@ -1,13 +1,15 @@
 import OfferCard from '../../components/offer-card/offer-card';
 import CardsList from '../../components/cards-list/cards-list';
 import { OfferValue } from '../../types/offer';
-
+import Map from '../../components/map/map';
+import TypeCity from '../../types/TypeCity';
 type MainPageProps = {
   offersRentalCount: number;
   offers: OfferValue[];
+  city: TypeCity;
 }
 
-function MainPage({offersRentalCount, offers}: MainPageProps): JSX.Element {
+function MainPage({offersRentalCount, offers, city}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -102,7 +104,11 @@ function MainPage({offersRentalCount, offers}: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} offers={offers}>
+
+                </Map>
+              </section>
             </div>
           </div>
         </div>

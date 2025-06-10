@@ -11,3 +11,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+export const URL_MARKER_DEFAULT = '../../public/img/ico-place.svg';
