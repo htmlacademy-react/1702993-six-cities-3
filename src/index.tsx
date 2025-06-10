@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
 import { offers } from './mocks/offers';
-
+import { city } from './mocks/city';
 const Settings = {
   OffersRentalCount: 6,
 } as const;
@@ -16,6 +16,7 @@ root.render(
     <App
       offersRentalCount = {Settings.OffersRentalCount}
       offers = {offers}
+      city = {city}
     />
   </React.StrictMode>
 );

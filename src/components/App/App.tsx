@@ -7,13 +7,15 @@ import ErrorPage from '../../pages/error-page/error-page';
 import { AppRoute, AuthorizationStatus } from '../const';
 import PrivateRoute from '../private-route/private-route';
 import { OfferValue } from '../../types/offer';
+import TypeCity from '../../types/TypeCity';
 
 type AppMainPageProps = {
   offersRentalCount: number;
   offers: OfferValue[];
+  city: TypeCity;
 }
 
-function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
+function App({offersRentalCount, offers, city}: AppMainPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +24,7 @@ function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
           element={<MainPage
             offers={offers}
             offersRentalCount={offersRentalCount}
+            city={city}
           />}
         />
         <Route
