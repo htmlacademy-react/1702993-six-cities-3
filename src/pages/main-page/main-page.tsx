@@ -1,4 +1,3 @@
-import OfferCard from '../../components/offer-card/offer-card';
 import CardsList from '../../components/cards-list/cards-list';
 import { OfferValue } from '../../types/offer';
 import Map from '../../components/map/map';
@@ -9,7 +8,7 @@ type MainPageProps = {
   city: TypeCity;
 }
 
-function MainPage({offersRentalCount, offers, city}: MainPageProps): JSX.Element {
+function MainPage({ offersRentalCount, offers, city }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -99,16 +98,20 @@ function MainPage({offersRentalCount, offers, city}: MainPageProps): JSX.Element
                   <li className="places__option" tabIndex={4}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={offers}/>
-              </div>
+              <CardsList
+                offers={offers}
+                variantClassCardList='cities__places-'
+                variantClassCard='cities'
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={city} offers={offers}>
+              <Map
+                className='cities__map'
+                city={city}
+                offers={offers}
+              >
 
-                </Map>
-              </section>
+              </Map>
             </div>
           </div>
         </div>

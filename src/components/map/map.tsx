@@ -1,23 +1,31 @@
 import leaflet, { LeafletEventHandlerFnMap } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import { URL_MARKER_DEFAULT } from '../const';
+import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE } from '../const';
 import TypeCity from '../../types/TypeCity';
 import { useEffect, useRef, useState } from 'react';
 import { OfferValue } from '../../types/offer';
 
 type MapProps = {
+  className?: string;
   city: TypeCity;
   offers: OfferValue[];
+  activeOfferId: string;
 }
 
-function Map({ city, offers }: MapProps) {
+function Map({ className, city, offers, activeOfferId }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const isRenderedRef = useRef(false);
   const [map, setMap] = useState<LeafletEventHandlerFnMap | null>(null);
-
+  console.log(activeOfferId);
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const activeMarkerIcon = leaflet.icon({
+    iconUrl: URL_MARKER_ACTIVE,
     iconSize: [40, 40],
     iconAnchor: [20, 40],
   });
@@ -49,21 +57,14 @@ function Map({ city, offers }: MapProps) {
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         }, {
-          icon: defaultCustomIcon
+          icon: offer.id === activeOfferId ? activeMarkerIcon : defaultCustomIcon
         })
           .addTo(instance));
       }
       isRenderedRef.current = true;
     }
-  }, [mapRef, city, offers, map]);
+  }, [mapRef, city, offers, map, className, activeOfferId, activeMarkerIcon, defaultCustomIcon]);
 
-  return (
-    <div
-      style={{ height: '100%' }}
-      ref={mapRef}
-    >
-
-    </div>
-  );
+  return <section className={`map ${className}`} ref={mapRef}> </section>;
 }
 export default Map;
