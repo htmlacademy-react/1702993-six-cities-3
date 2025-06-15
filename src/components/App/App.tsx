@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritePage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
@@ -7,13 +7,17 @@ import ErrorPage from '../../pages/error-page/error-page';
 import { AppRoute, AuthorizationStatus } from '../const';
 import PrivateRoute from '../private-route/private-route';
 import { OfferValue } from '../../types/offer';
+import TypeCity from '../../types/TypeCity';
+import { TypeComments } from '../../types/TypeComments';
 
 type AppMainPageProps = {
   offersRentalCount: number;
   offers: OfferValue[];
+  city: TypeCity;
+  comments: TypeComments;
 }
 
-function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
+function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +26,7 @@ function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
           element={<MainPage
             offers={offers}
             offersRentalCount={offersRentalCount}
+            city={city}
           />}
         />
         <Route
@@ -42,7 +47,12 @@ function App({offersRentalCount, offers}: AppMainPageProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage />}
+          element={
+            <OfferPage
+              comments={comments}
+              city={city}
+              offers={offers}
+            />}
         />
         <Route
           path='*'

@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 import { OfferValue } from '../../types/offer';
-import { AppRoute } from '../const';
 
 type OfferCardProps = {
   offer: OfferValue;
-  variant?: 'cities__card' | 'favorites__card';
+  variant?: string;
   handleOffer: (offer?: OfferValue) => void;
 }
 
-function PlaceCard({offer, handleOffer}: OfferCardProps): JSX.Element {
+function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element {
   const handleHover = () => {
     handleOffer(offer);
   };
@@ -18,13 +17,14 @@ function PlaceCard({offer, handleOffer}: OfferCardProps): JSX.Element {
 
   return (
     <Link to={`/offer/${offer.id}`}>
-      <article className="cities__card place-card"
+      <article
+        className={`${variant}__card place-card`}
         onMouseEnter={handleHover}
         onMouseLeave={handleUnHover}
       >
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
+        {
+          offer?.isPremium && <div className="place-card__mark"><span>Premium</span></div>
+        }
         <div className="cities__image-wrapper place-card__image-wrapper">
           <a href="#">
             <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"></img>

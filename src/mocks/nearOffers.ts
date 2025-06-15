@@ -1,6 +1,6 @@
 import { OfferValue } from '../types/offer';
 
-export const offers: OfferValue[] = [
+export const nearOffers: OfferValue[] = [
   {
     id: '1',
     title: 'Beautiful & luxurious studio at great location',
@@ -20,7 +20,7 @@ export const offers: OfferValue[] = [
       zoom: 8,
     },
     isFavorite: true,
-    isPremium: true,
+    isPremium: false,
     rating: 4,
     previewImage: '../../public/img/apartment-01.jpg'
   },
@@ -69,28 +69,5 @@ export const offers: OfferValue[] = [
     isPremium: false,
     rating: 4,
     previewImage: '../../public/img/apartment-02.jpg'
-  },
-  {
-    id: '4',
-    title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
-    price: 120,
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.3809553943508,
-        longitude: 4.939309666406198,
-        zoom: 8,
-      },
-    },
-    location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
-      zoom: 8,
-    },
-    isFavorite: false,
-    isPremium: false,
-    rating: 3,
-    previewImage: '../../public/img/apartment-01.jpg'
-  },
+  }
 ];
