@@ -10,9 +10,21 @@ type OfferCardProps = {
 function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element {
 
   const SETTINGS = {
-    main: 'cities__card',
-    offer: 'near-places__card',
-    favorites: ''
+    main: {
+      className: 'cities__card',
+      with: '260',
+      height: '200'
+    },
+    offer: {
+      className: 'near-places__card',
+      with: '260',
+      height: '200'
+    },
+    favorites: {
+      className: 'near-places__card',
+      with: '150',
+      height: '110'
+    }
   };
   const handleHover = () => {
     handleOffer(offer);
@@ -23,7 +35,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
 
   return (
     <article
-      className={`${SETTINGS[variant]} place-card`}
+      className={`${SETTINGS[variant].className} place-card`}
       onMouseEnter={handleHover}
       onMouseLeave={handleUnHover}
     >
@@ -33,7 +45,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
       <Link to={`/offer/${offer.id}`}>
         <div className="cities__image-wrapper place-card__image-wrapper">
           <a href="#">
-            <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"></img>
+            <img className="place-card__image" src={offer.previewImage} width={SETTINGS[variant].with} height={SETTINGS[variant].height} alt="Place image"></img>
           </a>
         </div>
       </Link>

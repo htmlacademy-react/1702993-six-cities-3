@@ -4,13 +4,14 @@ import { Offer } from '../../types/offer';
 import { Nullable } from 'vitest';
 type CardListProps = {
   offers: Offer[];
-  variant: 'main' | 'offer';
+  variant: 'main' | 'offer' | 'favorites';
 }
 
 function CardsList({ offers, variant }: CardListProps) {
   const SETTINGS = {
     main: 'cities__places-list',
-    offer: 'near-places__list'
+    offer: 'near-places__list',
+    favorites: 'favorites__places'
   };
 
   const [activeOffer, setActiveOffer] = useState<Nullable<Offer>>(null);
