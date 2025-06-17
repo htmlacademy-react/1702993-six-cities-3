@@ -6,15 +6,15 @@ import LoginPage from '../../pages/login-page/login-page';
 import ErrorPage from '../../pages/error-page/error-page';
 import { AppRoute, AuthorizationStatus } from '../const';
 import PrivateRoute from '../private-route/private-route';
-import { OfferValue } from '../../types/offer';
-import TypeCity from '../../types/TypeCity';
-import { TypeComments } from '../../types/TypeComments';
+import { Offer } from '../../types/offer';
+import { City } from '../../types/city';
+import { Comment } from '../../types/comment';
 
 type AppMainPageProps = {
   offersRentalCount: number;
-  offers: OfferValue[];
-  city: TypeCity;
-  comments: TypeComments;
+  offers: Offer[];
+  city: City;
+  comments: Comment[];
 }
 
 function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): JSX.Element {
@@ -23,11 +23,13 @@ function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): J
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage
-            offers={offers}
-            offersRentalCount={offersRentalCount}
-            city={city}
-          />}
+          element={
+            <MainPage
+              offers={offers}
+              offersRentalCount={offersRentalCount}
+              city={city}
+            />
+          }
         />
         <Route
           path={AppRoute.Favorites}
@@ -35,9 +37,11 @@ function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): J
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              {<FavoritePage
-                offers={offers}
-              />}
+              {
+                <FavoritePage
+                  offers={offers}
+                />
+              }
             </PrivateRoute>
           }
         />
@@ -50,9 +54,10 @@ function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): J
           element={
             <OfferPage
               comments={comments}
-              city={city}
-              offers={offers}
-            />}
+              // city={city}
+              // offers={offers}
+            />
+          }
         />
         <Route
           path='*'

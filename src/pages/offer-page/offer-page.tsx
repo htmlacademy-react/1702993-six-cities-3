@@ -2,22 +2,19 @@ import ReviewForm from '../../components/comment-form/comment-form';
 import { useParams } from 'react-router-dom';
 import { offersPage } from '../../mocks/offersPage';
 import CommentsList from '../../components/comments-list/comments-list';
-import { TypeComments } from '../../types/TypeComments';
-import Map from '../../components/map/map';
+import MapComponent from '../../components/map/map';
 import { getNearOffers } from '../../utils';
 import CardsList from '../../components/cards-list/cards-list';
+import { offers } from '../../mocks/offers';
+import { comments } from '../../mocks/comments';
 
-type OfferPageProps = {
-  comments: TypeComments[];
-}
-
-function OfferPage({ comments }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const params = useParams();
   const pageId = params.id?.toString();
-  const offer = offersPage.find(offer => offer.id === pageId);
-  const offerReviewsCount = comments.filter((comment) => comment.id === offer.id).length;
-  const nearOffers = getNearOffers(offer);
-  const nearOffersPlusCurrent = [offer, ...nearOffers];
+  const offer = offersPage.find((offerItem) => offerItem.id === pageId);
+  const offerCurrent = offers.find((offerItem) => offerItem.id === pageId);
+  const offerReviewsCount = comments.filter((comment) => comment.id === offer?.id).length;
+  const nearOffers = getNearOffers(offerCurrent);
 
   return (
     <div className="page">
@@ -56,11 +53,11 @@ function OfferPage({ comments }: OfferPageProps): JSX.Element {
             <div className="offer__gallery">
               {
                 offer?.images.map((item) =>
-                (
-                  <div key={item} className="offer__image-wrapper">
-                    <img className="offer__image" src={item} alt="Photo studio" />
-                  </div>
-                )
+                  (
+                    <div key={item} className="offer__image-wrapper">
+                      <img className="offer__image" src={item} alt="Photo studio" />
+                    </div>
+                  )
                 )
               }
             </div>
@@ -108,11 +105,14 @@ function OfferPage({ comments }: OfferPageProps): JSX.Element {
                 <ul className="offer__inside-list">
                   {
                     offer?.goods.map((item) =>
-                      <li
-                        className="offer__inside-item"
-                      >
-                        {item}
-                      </li>
+                      (
+                        <li
+                          className="offer__inside-item"
+                          key={item}
+                        >
+                          {item}
+                        </li>
+                      )
                     )
                   }
                 </ul>
@@ -138,29 +138,19 @@ function OfferPage({ comments }: OfferPageProps): JSX.Element {
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{offerReviewsCount}</span></h2>
-                <ul className="reviews__list">
-                  <CommentsList
-                    comments={comments}
-                    offer={offer}
-                  >
-
-                  </CommentsList>
-                </ul>
-                <ReviewForm>
-
-                </ReviewForm>
+                <CommentsList
+                  offer={offer}
+                />
+                <ReviewForm />
               </section>
             </div>
           </div>
-          <Map
+          <MapComponent
             className='offer__map'
-            city={offer?.city.location}
-            offers={nearOffersPlusCurrent}
-            activeOfferId={offer.id}
-          >
-
-          </Map>
-          {/* <section className="offer__map map"></section> */}
+            city={offer?.city}
+            offers={offers}
+            activeOfferId={offer?.id}
+          />
         </section>
         <div className="container">
           <section className="near-places places">
@@ -169,9 +159,7 @@ function OfferPage({ comments }: OfferPageProps): JSX.Element {
               offers={nearOffers}
               variantClassCardList='near-places__'
               variantClassCard='near-places'
-            >
-
-            </CardsList>
+            />
           </section>
         </div>
       </main>

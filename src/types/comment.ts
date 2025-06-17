@@ -1,5 +1,4 @@
-export type TypeComments = [
-  {
+export type Comment = {
     id: string;
     date: string;
     user: {
@@ -9,5 +8,4 @@ export type TypeComments = [
     };
     comment: string;
     rating: number;
-  }
-]
+}
