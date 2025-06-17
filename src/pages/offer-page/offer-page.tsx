@@ -2,7 +2,7 @@ import ReviewForm from '../../components/comment-form/comment-form';
 import { useParams } from 'react-router-dom';
 import { offersPage } from '../../mocks/offersPage';
 import CommentsList from '../../components/comments-list/comments-list';
-import MapComponent from '../../components/map/map';
+import Map from '../../components/map/map';
 import { getNearOffers } from '../../utils';
 import CardsList from '../../components/cards-list/cards-list';
 import { offers } from '../../mocks/offers';
@@ -145,7 +145,7 @@ function OfferPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <MapComponent
+          <Map
             className='offer__map'
             city={offer?.city}
             offers={offers}
@@ -157,8 +157,7 @@ function OfferPage(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
               offers={nearOffers}
-              variantClassCardList='near-places__'
-              variantClassCard='near-places'
+              variant='offer'
             />
           </section>
         </div>

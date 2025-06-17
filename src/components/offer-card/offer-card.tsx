@@ -3,11 +3,17 @@ import { Offer } from '../../types/offer';
 
 type OfferCardProps = {
   offer: Offer;
-  variant?: string;
+  variant: 'main' | 'offer' | 'favorites';
   handleOffer: (offer?: Offer) => void;
 }
 
 function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element {
+
+  const SETTINGS = {
+    main: 'cities__card',
+    offer: 'near-places__card',
+    favorites: ''
+  };
   const handleHover = () => {
     handleOffer(offer);
   };
@@ -17,7 +23,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
 
   return (
     <article
-      className={`${variant}__card place-card`}
+      className={`${SETTINGS[variant]} place-card`}
       onMouseEnter={handleHover}
       onMouseLeave={handleUnHover}
     >

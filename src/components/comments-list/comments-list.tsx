@@ -3,7 +3,7 @@ import { TOfferPage } from '../../types/TOfferPage';
 import { comments } from '../../mocks/comments';
 
 type CommentsListProps = {
-  offer: TOfferPage | undefined;
+  offer: TOfferPage;
 }
 
 function CommentsList({ offer }: CommentsListProps) {

@@ -4,11 +4,15 @@ import { Offer } from '../../types/offer';
 import { Nullable } from 'vitest';
 type CardListProps = {
   offers: Offer[];
-  variantClassCardList: string;
-  variantClassCard: string;
+  variant: 'main' | 'offer';
 }
 
-function CardsList({ offers, variantClassCardList, variantClassCard }: CardListProps) {
+function CardsList({ offers, variant }: CardListProps) {
+  const SETTINGS = {
+    main: 'cities__places-list',
+    offer: 'near-places__list'
+  };
+
   const [activeOffer, setActiveOffer] = useState<Nullable<Offer>>(null);
   const handleOffer = (offer?: Offer) => {
     setActiveOffer(offer || null);
@@ -16,7 +20,7 @@ function CardsList({ offers, variantClassCardList, variantClassCard }: CardListP
 
   return (
     <div
-      className={`${variantClassCardList}list places__list tabs__content`}
+      className={`${SETTINGS[variant]} places__list tabs__content`}
     >
       {
         offers.map((offer) =>
@@ -25,7 +29,7 @@ function CardsList({ offers, variantClassCardList, variantClassCard }: CardListP
               key={offer.id}
               offer={offer}
               handleOffer={handleOffer}
-              variant={variantClassCard}
+              variant={variant}
             />
           ))
       }

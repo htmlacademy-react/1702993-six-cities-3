@@ -1,6 +1,6 @@
 import CardsList from '../../components/cards-list/cards-list';
 import { Offer} from '../../types/offer';
-import MapComponent from '../../components/map/map';
+import Map from '../../components/map/map';
 type MainPageProps = {
   offersRentalCount: number;
   offers: Offer[];
@@ -98,17 +98,14 @@ function MainPage({ offersRentalCount, offers }: MainPageProps): JSX.Element {
               </form>
               <CardsList
                 offers={offers}
-                variantClassCardList='cities__places-'
-                variantClassCard='cities'
+                variant='main'
               />
             </section>
             <div className="cities__right-section">
-              <MapComponent
+              <Map
                 className='cities__map'
                 offers={offers}
-              >
-
-              </MapComponent>
+              />
             </div>
           </div>
         </div>
