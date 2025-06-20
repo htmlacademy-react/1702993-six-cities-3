@@ -1,7 +1,7 @@
-import { TypeComments } from '../../types/TypeComments';
+import { Comment } from '../../types/comment';
 
 type CommentsItemProps = {
-  comment: TypeComments;
+  comment: Comment;
 }
 
 function CommentsItem({comment}: CommentsItemProps): JSX.Element {

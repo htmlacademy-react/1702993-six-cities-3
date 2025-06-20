@@ -1,24 +1,26 @@
 import CommentsItem from '../comments-item/comments-item';
-import { TypeComments } from '../../types/TypeComments';
-import { Fragment } from 'react';
 import { TOfferPage } from '../../types/TOfferPage';
+import { comments } from '../../mocks/comments';
+
 type CommentsListProps = {
-  comments: TypeComments[];
   offer: TOfferPage;
 }
 
-function CommentsList({ comments, offer }: CommentsListProps) {
+function CommentsList({ offer }: CommentsListProps) {
 
   return (
-    <Fragment>
+    <ul className="reviews__list">
       {
         comments.filter((comment) => comment.id === offer.id).map((comment) =>
-        (<CommentsItem
-          key={comment.id}
-          comment={comment}
-        />))
+          (
+            <CommentsItem
+              key={comment.comment}
+              //СПРОСИТЬ почему при передаче key comment.id возникает ошибка и накаплеваются комментарии!!!
+              comment={comment}
+            />
+          ))
       }
-    </Fragment>
+    </ul>
   );
 }
 
