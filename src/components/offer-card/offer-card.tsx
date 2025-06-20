@@ -42,13 +42,11 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
       {
         offer?.isPremium && <div className="place-card__mark"><span>Premium</span></div>
       }
-      <Link to={`/offer/${offer.id}`}>
-        <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
-            <img className="place-card__image" src={offer.previewImage} width={SETTINGS[variant].with} height={SETTINGS[variant].height} alt="Place image"></img>
-          </a>
-        </div>
-      </Link>
+      <div className="cities__image-wrapper place-card__image-wrapper">
+        <Link to={`/offer/${offer.id}`}>
+          <img className="place-card__image" src={offer.previewImage} width={SETTINGS[variant].with} height={SETTINGS[variant].height} alt="Place image"></img>
+        </Link>
+      </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -68,11 +66,11 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={`/offer/${offer.id}`}>
-          <h2 className="place-card__name">
-            <a href="#">{offer.title}</a>
-          </h2>
-        </Link>
+        <h2 className="place-card__name">
+          <Link to={`/offer/${offer.id}`}>
+            {offer.title}
+          </Link>
+        </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
