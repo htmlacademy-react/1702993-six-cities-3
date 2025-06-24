@@ -15,7 +15,6 @@ function CommentsList({ offer }: CommentsListProps) {
           (
             <CommentsItem
               key={comment.comment}
-              //СПРОСИТЬ почему при передаче key comment.id возникает ошибка и накаплеваются комментарии!!!
               comment={comment}
             />
           ))

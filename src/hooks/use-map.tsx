@@ -3,8 +3,8 @@ import City from '../types/city';
 import { useEffect, useRef, useState } from 'react';
 
 type UseMapProps = {
-  city: City;
   mapRef: React.RefObject<HTMLElement | null>;
+  city: City;
 }
 
 function UseMap({ mapRef, city }: UseMapProps) {

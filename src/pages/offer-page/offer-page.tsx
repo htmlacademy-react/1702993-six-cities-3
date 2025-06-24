@@ -14,7 +14,12 @@ function OfferPage(): JSX.Element {
   const pageId = params.id?.toString();
   const offer = offersPage.find((offerItem) => offerItem.id === pageId);
   const offerCurrent = offers.find((offerItem) => offerItem.id === pageId);
-  const offerReviewsCount = comments.filter((comment) => comment.id === offer?.id).length;
+
+  if (!offer || !offerCurrent) {
+    return <div></div>;
+  }
+
+  const offerReviewsCount = comments.filter((comment) => comment.id === offer.id).length;
   const nearOffers = getNearOffers(offerCurrent);
 
   return (
@@ -25,7 +30,7 @@ function OfferPage(): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                offer?.images.map((item) =>
+                offer.images.map((item) =>
                   (
                     <div key={item} className="offer__image-wrapper">
                       <img className="offer__image" src={item} alt="Photo studio" />
@@ -42,7 +47,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offer?.title}
+                  {offer.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -56,28 +61,28 @@ function OfferPage(): JSX.Element {
                   <span></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offer?.rating}</span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offer?.type}
+                  {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer?.bedrooms} Bedrooms
+                  {offer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer?.maxAdults} adults
+                  Max {offer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer?.price}</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
                   {
-                    offer?.goods.map((item) =>
+                    offer.goods.map((item) =>
                       (
                         <li
                           className="offer__inside-item"
@@ -94,18 +99,18 @@ function OfferPage(): JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src={offer?.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
-                    {offer?.host.name}
+                    {offer.host.name}
                   </span>
                   {
-                    offer?.host.isPro ? <span className="offer__user-status"></span> : ''
+                    offer.host.isPro ? <span className="offer__user-status"></span> : ''
                   }
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    {offer?.description}
+                    {offer.description}
                   </p>
                 </div>
               </div>
@@ -120,9 +125,9 @@ function OfferPage(): JSX.Element {
           </div>
           <Map
             className='offer__map'
-            city={offer?.city}
+            city={offer.city}
             offers={offers}
-            activeOfferId={offer?.id}
+            activeOfferId={offer.id}
           />
         </section>
         <div className="container">

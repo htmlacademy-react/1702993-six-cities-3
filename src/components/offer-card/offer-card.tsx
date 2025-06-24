@@ -4,7 +4,7 @@ import { Offer } from '../../types/offer';
 type OfferCardProps = {
   offer: Offer;
   variant: 'main' | 'offer' | 'favorites';
-  handleOffer: (offer?: Offer) => void;
+  handleOffer: (offer: Offer | null) => void;
 }
 
 function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element {
@@ -30,7 +30,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
     handleOffer(offer);
   };
   const handleUnHover = () => {
-    handleHover();
+    handleOffer(null);
   };
 
   return (

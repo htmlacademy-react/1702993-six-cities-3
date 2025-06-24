@@ -6,30 +6,18 @@ import LoginPage from '../../pages/login-page/login-page';
 import ErrorPage from '../../pages/error-page/error-page';
 import { AppRoute, AuthorizationStatus } from '../const';
 import PrivateRoute from '../private-route/private-route';
-import { Offer } from '../../types/offer';
-import { City } from '../../types/city';
-import { Comment } from '../../types/comment';
 
-type AppMainPageProps = {
-  offersRentalCount: number;
-  offers: Offer[];
-  city: City;
-  comments: Comment[];
-}
 
-function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={
-            <MainPage
-              offers={offers}
-              offersRentalCount={offersRentalCount}
-              city={city}
-            />
-          }
+          element=
+            {
+              <MainPage />
+            }
         />
         <Route
           path={AppRoute.Favorites}
@@ -38,9 +26,7 @@ function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): J
               authorizationStatus={AuthorizationStatus.Auth}
             >
               {
-                <FavoritePage
-                  offers={offers}
-                />
+                <FavoritePage />
               }
             </PrivateRoute>
           }
@@ -52,11 +38,7 @@ function App({ offersRentalCount, offers, city, comments }: AppMainPageProps): J
         <Route
           path={AppRoute.Offer}
           element={
-            <OfferPage
-              comments={comments}
-              // city={city}
-              // offers={offers}
-            />
+            <OfferPage />
           }
         />
         <Route
