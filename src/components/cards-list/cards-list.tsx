@@ -1,7 +1,8 @@
 import OfferCard from '../offer-card/offer-card';
-import { useState } from 'react';
 import { Offer } from '../../types/offer';
-import { Nullable } from 'vitest';
+import { useDispatch } from 'react-redux';
+import { changeActiveOffer } from '../../store/action';
+
 type CardListProps = {
   offers: Offer[];
   variant: 'main' | 'offer' | 'favorites';
@@ -13,10 +14,9 @@ function CardsList({ offers, variant }: CardListProps) {
     offer: 'near-places__list',
     favorites: 'favorites__places'
   };
-
-  const [activeOffer, setActiveOffer] = useState<Nullable<Offer>>(null);
-  const handleOffer = (offer?: Offer) => {
-    setActiveOffer(offer || null);
+  const dispatch = useDispatch();
+  const handleOffer = (offer: Offer | null) => {
+    dispatch(changeActiveOffer(offer));
   };
 
   return (
