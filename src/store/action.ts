@@ -9,3 +9,6 @@ export const setOffersRent = createAction('setOffersRent');
 export const changeActiveOffer = createAction('changeActiveOffer', (value: Offer | null) => ({
   payload: value
 }));
+export const changeSortByValue = createAction('changeSortByValue', (value: string) => ({
+  payload: value
+}));

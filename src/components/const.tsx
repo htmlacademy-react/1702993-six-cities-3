@@ -14,3 +14,10 @@ export enum AuthorizationStatus {
 
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
 export const URL_MARKER_ACTIVE = '../../public/img/pin-active.svg';
+
+export const SORT_OPTIONS = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first'
+];

@@ -44,7 +44,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4,
+    rating: 3,
     previewImage: '../../public/img/apartment-small-03.jpg'
   },
   {
@@ -67,7 +67,7 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 2,
     previewImage: '../../public/img/apartment-02.jpg'
   },
   {
@@ -90,7 +90,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 3,
+    rating: 5,
     previewImage: '../../public/img/apartment-01.jpg'
   },
   {
@@ -113,7 +113,7 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: true,
-    rating: 4,
+    rating: 5,
     previewImage: '../../public/img/apartment-01.jpg'
   },
   {
@@ -136,7 +136,7 @@ export const offers: Offer[] = [
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4,
+    rating: 3,
     previewImage: '../../public/img/apartment-small-03.jpg'
   },
   {
@@ -159,7 +159,7 @@ export const offers: Offer[] = [
     },
     isFavorite: true,
     isPremium: false,
-    rating: 4,
+    rating: 2,
     previewImage: '../../public/img/apartment-02.jpg'
   },
   {

@@ -20,7 +20,8 @@ function OfferPage(): JSX.Element {
   }
 
   const offerReviewsCount = comments.filter((comment) => comment.id === offer.id).length;
-  const nearOffers = getNearOffers(offerCurrent);
+  const nearOffers = offers.filter((item) => item.city.name === offer.city.name);
+  const nearOffersPlusCurrent = getNearOffers(offerCurrent);
 
   return (
     <div className="page">
@@ -126,7 +127,7 @@ function OfferPage(): JSX.Element {
           <Map
             className='offer__map'
             city={offer.city}
-            offers={offers}
+            offers={nearOffers}
             activeOfferId={offer.id}
           />
         </section>
@@ -134,7 +135,7 @@ function OfferPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CardsList
-              offers={nearOffers}
+              offers={nearOffersPlusCurrent}
               variant='offer'
             />
           </section>
