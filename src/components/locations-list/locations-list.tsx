@@ -1,5 +1,5 @@
 import LocationItem from '../location-item/location-item';
-import { cities } from '../../mocks/cities';
+import { cities } from '../const';
 import City from '../../types/city';
 
 type locationListProps = {
