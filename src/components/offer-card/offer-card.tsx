@@ -33,6 +33,8 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
     handleOffer(null);
   };
 
+  const ratingWidth = offer.rating * 20;
+
   return (
     <article
       className={`${SETTINGS[variant].className} place-card`}
@@ -62,7 +64,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span></span>
+            <span style={{width: `${ratingWidth}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
