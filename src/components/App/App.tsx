@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import FavoritePage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
@@ -8,7 +8,8 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../store';
 import LoadingScreen from '../loading-screen/loading-screen';
-
+import HistoryRouter from '../history-route';
+import browserHistory from '../../services/browser-history';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -21,7 +22,8 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    // что за HelmetProvider, который использовался в демке на 1ч:38м
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -57,7 +59,7 @@ function App(): JSX.Element {
           element={<ErrorPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

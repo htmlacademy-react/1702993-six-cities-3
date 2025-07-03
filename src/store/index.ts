@@ -3,6 +3,7 @@ import {reducer} from './reducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, State } from '../types/state';
 import { createAPI } from '../services/api';
+import { redirect } from './middlewares/redirect';
 
 // export const store = configureStore({reducer});
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -16,6 +17,6 @@ export const store = configureStore({
     getDefaultMiddleware({
       thunk: {
         extraArgument: api
-      }
-    })
+      },
+    }).concat(redirect)
 });

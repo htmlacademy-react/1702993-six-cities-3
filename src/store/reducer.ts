@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeActiveOffer, changeCity, changeSortByValue, requireAuthorization, setError, setLoadingStatus, setOffersRent } from './action';
-// import { offers } from '../mocks/offers';
 import { Offer } from '../types/offer';
 import { cities } from '../mocks/cities';
 import City from '../types/city';

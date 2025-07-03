@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../store';
+import { logoutAction } from '../../store/api-actions';
+import { AppRoute } from '../const';
 
 function Header() {
+  const dispatch = useAppDispatch();
+
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link to={'/'} className="header__logo-link header__logo-link--active">
+            <Link to={AppRoute.Main} className="header__logo-link header__logo-link--active">
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
           </div>
@@ -21,9 +26,16 @@ function Header() {
                 </a>
               </li>
               <li className="header__nav-item">
-                <a className="header__nav-link" href="#">
+                <Link
+                  to={AppRoute.Login}
+                  className="header__nav-link"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispatch(logoutAction());
+                  }}
+                >
                   <span className="header__signout">Sign out</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
