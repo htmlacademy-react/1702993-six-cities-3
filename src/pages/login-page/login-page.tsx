@@ -12,9 +12,6 @@ function LoginPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  //зачем в демонстрации useNavigate?
-  // const navigate = useNavigate();
-
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };

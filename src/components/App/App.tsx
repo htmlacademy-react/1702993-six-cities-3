@@ -27,10 +27,9 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element=
-            {
-              <MainPage />
-            }
+          element={
+            <MainPage />
+          }
         />
         <Route
           path={AppRoute.Favorites}
@@ -46,7 +45,9 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={
+            <LoginPage />
+          }
         />
         <Route
           path={AppRoute.Offer}

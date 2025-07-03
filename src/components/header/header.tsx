@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { logoutAction } from '../../store/api-actions';
 import { AppRoute } from '../const';
 
 function Header() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -27,11 +28,12 @@ function Header() {
               </li>
               <li className="header__nav-item">
                 <Link
-                  to={AppRoute.Login}
+                  to={AppRoute.Main}
                   className="header__nav-link"
                   onClick={(evt) => {
                     evt.preventDefault();
                     dispatch(logoutAction());
+                    navigate(AppRoute.Login);
                   }}
                 >
                   <span className="header__signout">Sign out</span>
