@@ -1,6 +1,11 @@
 import { Fragment, ReactEventHandler, useState } from 'react';
+import { useAppDispatch } from '../../store';
+import { fetchCommentsActions, postCommentAction } from '../../store/api-actions';
 
 type TypeChangeListener = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
+type ReviewFormProps = {
+  offerId: string;
+}
 
 const rating = [
   { value: 5, title: 'perfect' },
@@ -10,12 +15,14 @@ const rating = [
   { value: 1, title: 'terribly' }
 ];
 
-function ReviewForm(): JSX.Element {
-  const [review, setReview] = useState({ rating: 0, review: '' });
+function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
+  const [review, setComment] = useState({ rating: 0, comment: '' });
   const listenerFormChange: TypeChangeListener = (event) => {
     const { name, value } = event.currentTarget;
-    setReview({ ...review, [name]: value });
+    setComment({ ...review, [name]: value });
   };
+
+  const dispatch = useAppDispatch();
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -27,7 +34,8 @@ function ReviewForm(): JSX.Element {
               <input
                 className="form__rating-input visually-hidden"
                 name="rating"
-                value={`${value}-stars`}
+                value={value}
+                // value={`${value}-stars`}
                 id={`${value}-stars`}
                 type="radio"
                 onChange={listenerFormChange}
@@ -48,16 +56,30 @@ function ReviewForm(): JSX.Element {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={listenerFormChange}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set
+          <span className="reviews__star">rating</span>
+          and describe your stay with at least
+          <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={review.comment.length < 50 && review.comment.length <= 300 || review.rating === 0}
+          onClick={(evt) => {
+            evt.preventDefault();
+            dispatch(postCommentAction({ review, offerId }));
+            // dispatch(fetchCommentsActions(offerId));
+          }}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

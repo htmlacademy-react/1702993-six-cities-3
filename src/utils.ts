@@ -1,7 +1,6 @@
 import { offers } from './mocks/offers';
 import { Offer } from './types/offer';
-
-const MAX_NEAR_OFFERS = 3;
+import { MAX_NEAR_OFFERS } from './components/const';
 
 export const getNearOffers = (offer: Offer): Offer[] => {
   const nearOffers: Offer[] = [];

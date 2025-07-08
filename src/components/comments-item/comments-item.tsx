@@ -5,6 +5,8 @@ type CommentsItemProps = {
 }
 
 function CommentsItem({comment}: CommentsItemProps): JSX.Element {
+  const commentsRatingWidth = comment.rating * 20;
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -18,7 +20,7 @@ function CommentsItem({comment}: CommentsItemProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span></span>
+            <span style={{width: `${commentsRatingWidth}%`}}></span>
             <span className="visually-hidden">{comment.rating}</span>
           </div>
         </div>
