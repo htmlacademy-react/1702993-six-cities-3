@@ -5,7 +5,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  Error = '/error'
+  Error = '/error',
 }
 
 export enum AuthorizationStatus {
@@ -14,10 +14,18 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum NotFoundPageStatus {
+  Unknown = 'UNKNOWN',
+  NotFound = 'ERROR',
+  Succes = 'SUCCES'
+}
+
 export enum APIRoute {
   Offers ='/offers',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Comments = '/comments',
+  Favorite = '/favorite'
 }
 
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
@@ -82,3 +90,10 @@ export const cities: City[] = [
     }
   },
 ];
+
+export const MIN_NEAR_OFFERS = 0;
+export const MAX_NEAR_OFFERS = 3;
+export enum FavoriteStatus {
+  Add = 1,
+  Remove = 0
+}

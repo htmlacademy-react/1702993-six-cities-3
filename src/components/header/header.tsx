@@ -1,11 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { logoutAction } from '../../store/api-actions';
-import { AppRoute } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 
 function Header() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const favoritesOffersCount = useAppSelector((state) => state.favorites);
 
   return (
     <header className="header">
@@ -18,14 +20,17 @@ function Header() {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  <span className="header__favorite-count">3</span>
-                </a>
-              </li>
+              {
+                authStatus === AuthorizationStatus.Auth &&
+                <li className="header__nav-item user">
+                  <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__favorite-count">{favoritesOffersCount.length}</span>
+                  </Link>
+                </li>
+              }
               <li className="header__nav-item">
                 <Link
                   to={AppRoute.Main}
@@ -36,7 +41,7 @@ function Header() {
                     navigate(AppRoute.Login);
                   }}
                 >
-                  <span className="header__signout">Sign out</span>
+                  <span className="header__signout">Sign {authStatus === AuthorizationStatus.Auth ? 'out' : 'in'}</span>
                 </Link>
               </li>
             </ul>

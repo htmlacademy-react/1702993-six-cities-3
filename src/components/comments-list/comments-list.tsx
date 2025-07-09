@@ -1,20 +1,19 @@
+import { Comment } from '../../types/comment';
 import CommentsItem from '../comments-item/comments-item';
-import { TOfferPage } from '../../types/TOfferPage';
-import { comments } from '../../mocks/comments';
 
 type CommentsListProps = {
-  offer: TOfferPage;
+  comments: Comment[];
 }
 
-function CommentsList({ offer }: CommentsListProps) {
+function CommentsList({comments}: CommentsListProps) {
 
   return (
     <ul className="reviews__list">
       {
-        comments.filter((comment) => comment.id === offer.id).map((comment) =>
+        comments.map((comment) =>
           (
             <CommentsItem
-              key={comment.comment}
+              key={comment.id}
               comment={comment}
             />
           ))
