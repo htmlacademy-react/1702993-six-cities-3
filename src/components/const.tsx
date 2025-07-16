@@ -21,7 +21,7 @@ export enum NotFoundPageStatus {
 }
 
 export enum APIRoute {
-  Offers ='/offers',
+  Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
@@ -97,3 +97,27 @@ export enum FavoriteStatus {
   Add = 1,
   Remove = 0
 }
+
+export const MAX_COMMENTS_COUNT = 10;
+
+export enum NameSpace {
+  Data = 'DATA',
+  Offers = 'OFFERS',
+  User = 'USER',
+  Bookmark = 'BOOKMARK'
+}
+
+export const MONTHS_LIST = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];

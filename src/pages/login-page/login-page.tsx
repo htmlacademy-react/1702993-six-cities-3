@@ -1,17 +1,16 @@
 import { FormEvent, useRef } from 'react';
-
-// import { useNavigate } from 'react-router-dom';
 import { AuthData } from '../../types/auth-data';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../store';
 import Header from '../../components/header/header';
-import { AppRoute, AuthorizationStatus } from '../../components/const';
+import { AppRoute, AuthorizationStatus, cities } from '../../components/const';
 import { Navigate } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
@@ -52,8 +51,10 @@ function LoginPage(): JSX.Element {
                 <input
                   ref={loginRef}
                   className="login__input form__input"
-                  type="email" name="email"
+                  type="email"
+                  name="email"
                   placeholder="Email"
+                  autoComplete="on"
                   required
                 />
               </div>
@@ -74,7 +75,7 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+                <span>{cities[0].name}</span>
               </a>
             </div>
           </section>

@@ -1,11 +1,16 @@
 import { Comment } from '../../types/comment';
-
+import { MONTHS_LIST } from '../const';
 type CommentsItemProps = {
   comment: Comment;
 }
 
-function CommentsItem({comment}: CommentsItemProps): JSX.Element {
+function CommentsItem({ comment }: CommentsItemProps): JSX.Element {
   const commentsRatingWidth = comment.rating * 20;
+  const date = new Date(comment.date);
+
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const day = date.getDate();
 
   return (
     <li className="reviews__item">
@@ -20,14 +25,14 @@ function CommentsItem({comment}: CommentsItemProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${commentsRatingWidth}%`}}></span>
+            <span style={{ width: `${commentsRatingWidth}%` }}></span>
             <span className="visually-hidden">{comment.rating}</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+        <time className="reviews__time" dateTime={`${year}-${month}-${day}`}>{`${MONTHS_LIST[month]} ${year}`}</time>
       </div>
     </li>
   );

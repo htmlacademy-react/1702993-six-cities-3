@@ -4,18 +4,20 @@ import Header from '../../components/header/header';
 import LocationsList from '../../components/locations-list/locations-list';
 import { useAppSelector } from '../../store';
 import Sort from '../../components/sort/sort';
+import { Fragment } from 'react';
+import { getActiveOffer, getCity, getOffers } from '../../store/offers-process/offers-selectors';
 
 function MainPage(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const offersCount = currentOffers.length;
-  const activeOffer = useAppSelector((state) => state.activeOffer);
+  const activeOffer = useAppSelector(getActiveOffer);
 
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${offers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -25,23 +27,35 @@ function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} {offersCount > 1 ? 'places' : 'place'} to stay in {currentCity.name}</b>
-              <Sort />
-              <CardsList
-                offers={currentOffers}
-                variant='main'
-              />
+          <div className={`cities__places-container container ${offers.length === 0 ? 'cities__places-container--empty' : ''}`}>
+            <section className={`${offers.length === 0 ? 'cities__no-places' : 'cities__places places'}`}>
+              {offers.length === 0 ? (
+                <div className='cities__status-wrapper tabs__content'>
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">We could not find any property available at the moment in {currentCity.name}</p>
+                </div>
+              ) :
+                <Fragment>
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{offersCount} {offersCount > 1 ? 'places' : 'place'} to stay in {currentCity.name}</b>
+                  <Sort />
+                  <CardsList
+                    offers={currentOffers}
+                    variant='main'
+                    near={false}
+                  />
+                </Fragment>}
             </section>
             <div className="cities__right-section">
-              <Map
-                className='cities__map'
-                offers={currentOffers}
-                city={currentCity}
-                activeOfferId={activeOffer?.id}
-              />
+              {
+                offersCount > 0 &&
+                  <Map
+                    className='cities__map'
+                    offers={currentOffers}
+                    city={currentCity}
+                    activeOfferId={activeOffer?.id}
+                  />
+              }
             </div>
           </div>
         </div>

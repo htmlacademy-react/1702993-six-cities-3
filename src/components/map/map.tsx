@@ -1,11 +1,14 @@
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { URL_MARKER_DEFAULT, URL_MARKER_ACTIVE, AuthorizationStatus} from '../const';
+import {
+  URL_MARKER_DEFAULT,
+  URL_MARKER_ACTIVE,
+} from '../const';
 import { useEffect, useRef } from 'react';
 import { Offer } from '../../types/offer';
 import UseMap from '../../hooks/use-map';
 import City from '../../types/city';
-import { useAppSelector } from '../../store';
+
 
 type MapProps = {
   className?: string;
@@ -17,7 +20,6 @@ type MapProps = {
 function Map({ className, offers, activeOfferId, city }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = UseMap({ mapRef, city });
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -54,8 +56,6 @@ function Map({ className, offers, activeOfferId, city }: MapProps) {
     }
   }, [mapRef, offers, map, className, activeOfferId, city, defaultCustomIcon, activeMarkerIcon]);
 
-  return authStatus === AuthorizationStatus.Auth
-    ? <section className={`map ${className}`} ref={mapRef} />
-    : <section className={`${className} map`} />;
+  return <section className={`map ${className}`} ref={mapRef} />;
 }
 export default Map;

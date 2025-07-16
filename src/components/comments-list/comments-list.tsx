@@ -1,5 +1,6 @@
 import { Comment } from '../../types/comment';
 import CommentsItem from '../comments-item/comments-item';
+import { MAX_COMMENTS_COUNT } from '../const';
 
 type CommentsListProps = {
   comments: Comment[];
@@ -7,10 +8,12 @@ type CommentsListProps = {
 
 function CommentsList({comments}: CommentsListProps) {
 
+  const sortedComments = [...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS_COUNT);
+
   return (
     <ul className="reviews__list">
       {
-        comments.map((comment) =>
+        sortedComments.map((comment) =>
           (
             <CommentsItem
               key={comment.id}
