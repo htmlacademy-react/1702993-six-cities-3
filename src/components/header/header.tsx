@@ -34,17 +34,20 @@ function Header() {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {
-                authStatus === AuthorizationStatus.Auth &&
-                <li className="header__nav-item user">
-                  <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
+              <li className="header__nav-item user">
+                <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
+                  <div className="header__avatar-wrapper user__avatar-wrapper">
+                  </div>
+                  {
+                    authStatus === AuthorizationStatus.Auth &&
                     <span className="header__user-name user__name">{userName}</span>
+                  }
+                  {
+                    authStatus === AuthorizationStatus.Auth &&
                     <span className="header__favorite-count">{favoritesOffersCount.length}</span>
-                  </Link>
-                </li>
-              }
+                  }
+                </Link>
+              </li>
               <li className="header__nav-item">
                 <Link
                   to={AppRoute.Main}
