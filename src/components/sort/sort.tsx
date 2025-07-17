@@ -2,11 +2,12 @@ import { useDispatch } from 'react-redux';
 import { useBoolean } from '../../hooks/use-boolean';
 import { useAppSelector } from '../../store';
 import { SORT_OPTIONS } from '../const';
-import { changeSortByValue } from '../../store/action';
+import { changeSortByValue } from '../../store/offers-process/offers-process.slice';
+import { getSort } from '../../store/offers-process/offers-selectors';
 
 function Sort() {
   const { isOn, toggle } = useBoolean(false);
-  const selectedOption = useAppSelector((state) => state.sortBy);
+  const selectedOption = useAppSelector(getSort);
   const dispatch = useDispatch();
 
   return (
@@ -42,8 +43,5 @@ function Sort() {
     </form>
   );
 }
-// <li className="places__option places__option--active" tabIndex={1}>Popular</li>
-// <li className="places__option" tabIndex={2}>Price: low to high</li>
-// <li className="places__option" tabIndex={3}>Price: high to low</li>
-// <li className="places__option" tabIndex={4}>Top rated first</li>
+
 export default Sort;

@@ -5,21 +5,31 @@ import Map from '../../components/map/map';
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { fetchCommentsActions, fetchNearOffersActions, fetchOfferPageActions } from '../../store/api-actions';
 import { AuthorizationStatus, MAX_NEAR_OFFERS, MIN_NEAR_OFFERS, NotFoundPageStatus } from '../../components/const';
 import ErrorPage from '../error-page/error-page';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+// import { clearOfferPage } from '../../store/action';
+import { clearOfferPage } from '../../store/offers-process/offers-process.slice';
+import ButtonFavorite from '../../components/button-favorite/button-favorite';
+import { getComments, getNearOffers, getOfferPage, getOffers } from '../../store/offers-process/offers-selectors';
+import { getErrorStatus } from '../../store/data-process/data-selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
 
-function OfferPage(): JSX.Element | null {
+function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const offers = useAppSelector((state) => state.offers);
-  const offer = useAppSelector((state) => state.offerPage);
-  const comments = useAppSelector((state) => state.comments);
-  const nearOffers = useAppSelector((state) => state.nearOffers).slice(MIN_NEAR_OFFERS, MAX_NEAR_OFFERS);
-  const errorStatus = useAppSelector((state) => state.errorStatus);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const offers = useAppSelector(getOffers);
+  const offer = useAppSelector(getOfferPage);
+  const comments = useAppSelector(getComments);
+  const nearOffers = useAppSelector(getNearOffers).slice(MIN_NEAR_OFFERS, MAX_NEAR_OFFERS);
+  const errorStatus = useAppSelector(getErrorStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+
+  const clearOffer = useCallback(() => {
+    dispatch(clearOfferPage(null));
+  }, [dispatch]);
 
   useEffect(() => {
     Promise.all([
@@ -27,23 +37,21 @@ function OfferPage(): JSX.Element | null {
       dispatch(fetchCommentsActions(id as string)),
       dispatch(fetchNearOffersActions(id as string))
     ]);
-  }, [dispatch, id]);
+
+    return clearOffer();
+  }, [dispatch, id, clearOffer]);
 
   if (!offer) {
     if (!offer && errorStatus === NotFoundPageStatus.NotFound) {
-      return <ErrorPage></ErrorPage>;
+      return <ErrorPage />;
     }
-    return <LoadingScreen />;
-  }
-
-  if (offer.id !== id) {
     return <LoadingScreen />;
   }
 
   const { city, bedrooms, description, goods, host, images, isPremium, maxAdults, price, title, type, rating } = offer;
   const currentOffer = offers.filter((offerItem) => offerItem.id === offer.id);
   const nearOffersPlusCurrent = nearOffers.concat(currentOffer);
-  const ratingWidth = offer.rating * 20;
+  const ratingWidth = Math.round(offer.rating) * 20;
 
   return (
     <div className="page">
@@ -53,7 +61,7 @@ function OfferPage(): JSX.Element | null {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                images.map((item) =>
+                images.slice(0, 6).map((item) =>
                   (
                     <div key={item} className="offer__image-wrapper">
                       <img className="offer__image" src={item} alt="Photo studio" />
@@ -70,12 +78,7 @@ function OfferPage(): JSX.Element | null {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <ButtonFavorite offer={offer} offerId={offer.id} fullOffer near={false} variant='fullOffer' />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -119,14 +122,14 @@ function OfferPage(): JSX.Element | null {
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
                     <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
                     {host.name}
                   </span>
                   {
-                    host.isPro ? <span className="offer__user-status"></span> : ''
+                    host.isPro ? <span className="offer__user-status">Pro</span> : ''
                   }
                 </div>
                 <div className="offer__description">
@@ -143,7 +146,7 @@ function OfferPage(): JSX.Element | null {
                 {
                   authStatus === AuthorizationStatus.Auth &&
                   <ReviewForm
-                    offerId={id}
+                    offerId={offer.id}
                   />
                 }
               </section>
@@ -162,6 +165,7 @@ function OfferPage(): JSX.Element | null {
             <CardsList
               offers={nearOffers}
               variant='offer'
+              near
             />
           </section>
         </div>

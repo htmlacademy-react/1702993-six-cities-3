@@ -1,6 +1,6 @@
 import { Fragment, ReactEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../store';
-import { fetchCommentsActions, postCommentAction } from '../../store/api-actions';
+import { postCommentAction } from '../../store/api-actions';
 
 type TypeChangeListener = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
 type ReviewFormProps = {
@@ -35,7 +35,6 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
                 className="form__rating-input visually-hidden"
                 name="rating"
                 value={value}
-                // value={`${value}-stars`}
                 id={`${value}-stars`}
                 type="radio"
                 onChange={listenerFormChange}
@@ -71,11 +70,10 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.comment.length < 50 && review.comment.length <= 300 || review.rating === 0}
+          disabled={review.comment.length < 50 || review.comment.length > 300 || review.rating === 0}
           onClick={(evt) => {
             evt.preventDefault();
             dispatch(postCommentAction({ review, offerId }));
-            // dispatch(fetchCommentsActions(offerId));
           }}
         >
           Submit

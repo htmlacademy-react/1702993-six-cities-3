@@ -1,32 +1,30 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { changeFavorites } from '../../store/action';
-import { changeFavoritesActions, fetchFavoritesActions, fetchOffersActions } from '../../store/api-actions';
-import { useAppDispatch } from '../../store';
+import ButtonFavorite from '../button-favorite/button-favorite';
 
 type OfferCardProps = {
   offer: Offer;
+  offerId: string;
   variant: 'main' | 'offer' | 'favorites';
   handleOffer: (offer: Offer | null) => void;
+  near: boolean;
 }
 
-function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element {
-
-  const dispatch = useAppDispatch();
+function PlaceCard({ offer, handleOffer, variant, offerId, near }: OfferCardProps): JSX.Element {
 
   const SETTINGS = {
     main: {
-      className: 'cities__card',
+      className: 'cities',
       with: '260',
       height: '200'
     },
     offer: {
-      className: 'near-places__card',
+      className: 'near-places',
       with: '260',
       height: '200'
     },
     favorites: {
-      className: 'near-places__card',
+      className: 'favorites',
       with: '150',
       height: '110'
     }
@@ -38,24 +36,18 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
     handleOffer(null);
   };
 
-  const handleFavorite = () => {
-    const changeFavorite = dispatch(changeFavoritesActions({ offerId: offer.id, status: Number(!offer.isFavorite) }));
-    dispatch(changeFavorites(offer, changeFavorite.arg.status));
-    console.log(changeFavorite);
-  };
-
-  const ratingWidth = offer.rating * 20;
+  const ratingWidth = Math.round(offer.rating) * 20;
 
   return (
     <article
-      className={`${SETTINGS[variant].className} place-card`}
+      className={`${SETTINGS[variant].className}__card place-card`}
       onMouseEnter={handleHover}
       onMouseLeave={handleUnHover}
     >
       {
         offer?.isPremium && <div className="place-card__mark"><span>Premium</span></div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${SETTINGS[variant].className}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
@@ -71,16 +63,7 @@ function PlaceCard({ offer, handleOffer, variant }: OfferCardProps): JSX.Element
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={`place-card__bookmark-button button ${ offer.isFavorite ? 'place-card__bookmark-button--active' : ''}`}
-            type="button"
-            onClick={handleFavorite}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <ButtonFavorite offer={offer} offerId={offerId} fullOffer={false} near={near} variant='cardOffer'/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

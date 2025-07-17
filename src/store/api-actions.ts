@@ -2,28 +2,31 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { postComment } from '../types/post-comment';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { Offer} from '../types/offer';
+import { Offer } from '../types/offer';
 import { changeProps } from '../types/change-comment';
 import { APIRoute, AppRoute, AuthorizationStatus, NotFoundPageStatus, TIMEOUT_SHOW_ERROR } from '../components/const';
 import {
-  changeFavorites,
   redirectToRoute,
-  requireAuthorization,
-  setComments,
-  setError,
-  setErrorStatus,
-  setFavorites,
-  setLoadingStatus,
-  setNearOffers,
-  setOfferPage,
-  setOffersRent,
+  // requireAuthorization,
+  // setComments,
+  // setError,
+  // setErrorStatus,
+  // setFavorites,
+  // setLoadingStatus,
+  // setNearOffers,
+  // setOfferPage,
+  // setOffersRent,
 } from './action';
+import { setError, setErrorStatus, setLoadingStatus } from './data-process/data-process.slice';
+import { setOffersRent, setOfferPage, setNearOffers, setFavorites, setComments } from './offers-process/offers-process.slice';
+import { requireAuthorization } from './user-process/user-process.slice';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { removeToken, saveToken } from '../services/token';
 import { store } from '.';
 import { TOfferPage } from '../types/TOfferPage';
 import { Comment } from '../types/comment';
+import { removeUserName, saveUserName } from '../services/user';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -42,9 +45,9 @@ export const fetchOffersActions = createAsyncThunk<void, undefined, {
 }>(
   'fetchOffersRent',
   async (_arg, { dispatch, extra: api }) => {
-    dispatch(setLoadingStatus(true));
+    // dispatch(setLoadingStatus(true));
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(setLoadingStatus(false));
+    // dispatch(setLoadingStatus(false));
     dispatch(setOffersRent(data));
   },
 );
@@ -97,33 +100,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   }
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
-  }
-);
-
-export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'logout',
-  async (_arg, { dispatch, extra: api }) => {
-    await api.delete(APIRoute.Logout);
-    removeToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-  }
-);
-
 export const fetchFavoritesActions = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -142,12 +118,42 @@ export const changeFavoritesActions = createAsyncThunk<void, changeProps, {
   extra: AxiosInstance;
 }>(
   'changeFavorites',
-  async ({ offerId, status }, { dispatch, extra: api }) => {
-    const response = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
-    dispatch(changeFavorites(response.data, status));
+  async ({ offerId, status }, { extra: api }) => {
+    await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+  },
+);
+
+export const loginAction = createAsyncThunk<void, AuthData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(token);
+    saveUserName(email);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
     dispatch(fetchFavoritesActions());
     dispatch(fetchOffersActions());
-  },
+  }
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete(APIRoute.Logout);
+    removeToken();
+    removeUserName();
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(fetchFavoritesActions());
+    dispatch(fetchOffersActions());
+  }
 );
 
 export const fetchCommentsActions = createAsyncThunk<void, string, {
@@ -162,17 +168,17 @@ export const fetchCommentsActions = createAsyncThunk<void, string, {
   }
 );
 
-export const postCommentAction = createAsyncThunk<Comment, postComment, {
+export const postCommentAction = createAsyncThunk<void, postComment, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'postComment',
   async ({
-    offerId, review }, { extra: api }) => {
+    offerId, review }, { dispatch, extra: api }) => {
     const comment = review.comment;
     const rating = Number(review.rating);
-    const response = await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, { comment, rating });
-    return response.data;
+    await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, { comment, rating });
+    dispatch(fetchCommentsActions(offerId));
   }
 );

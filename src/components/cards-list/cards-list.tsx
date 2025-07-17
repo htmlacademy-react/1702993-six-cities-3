@@ -1,21 +1,23 @@
 import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/offer';
 import { useDispatch } from 'react-redux';
-import { changeActiveOffer } from '../../store/action';
+import { changeActiveOffer } from '../../store/offers-process/offers-process.slice';
 import { useAppSelector } from '../../store';
+import { getSort } from '../../store/offers-process/offers-selectors';
 
 type CardListProps = {
   offers: Offer[];
   variant: 'main' | 'offer' | 'favorites';
+  near: boolean;
 }
 
-function CardsList({ offers, variant }: CardListProps) {
+function CardsList({ offers, variant, near }: CardListProps) {
   const SETTINGS = {
     main: 'cities__places-list',
     offer: 'near-places__list',
     favorites: 'favorites__places'
   };
-  const selecredSortBy = useAppSelector((state) => state.sortBy);
+  const selecredSortBy = useAppSelector(getSort);
   let sortedOffers = offers;
 
   const dispatch = useDispatch();
@@ -45,8 +47,10 @@ function CardsList({ offers, variant }: CardListProps) {
             <OfferCard
               key={offer.id}
               offer={offer}
+              offerId={offer.id}
               handleOffer={handleOffer}
               variant={variant}
+              near={near}
             />
           ))
       }
