@@ -5,7 +5,7 @@ import { Offer } from '../../types/offer';
 import { APIRoute, PageStatus } from '../../components/const';
 import { setPageStatus } from '../slices/data-slice/data-slice';
 import { setOffersRent, setOfferPage, setNearOffers } from '../slices/offers-slice/offers-slice';
-import { TOfferPage } from '../../types/TOfferPage';
+import { OfferPage } from '../../types/offer-page';
 
 export const fetchOffersActions = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -26,7 +26,7 @@ export const fetchOfferPageActions = createAsyncThunk<void, string, {
   async (offerId, { dispatch, extra: api }) => {
     dispatch(setPageStatus(PageStatus.Unknown));
     try {
-      const { data } = await api.get<TOfferPage>(`${APIRoute.Offers}/${offerId}`);
+      const { data } = await api.get<OfferPage>(`${APIRoute.Offers}/${offerId}`);
       dispatch(setOfferPage(data));
       dispatch(setPageStatus(PageStatus.Succes));
     } catch {

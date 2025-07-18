@@ -9,7 +9,7 @@ type LocationProps = {
   currentCity: City;
 }
 
-function LocationItem({ city, currentCity }: LocationProps) {
+function LocationItem({ city, currentCity }: LocationProps): JSX.Element {
   const className = city.name === currentCity.name ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item';
   const dispatch = useDispatch();
   return (

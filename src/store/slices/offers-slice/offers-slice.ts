@@ -3,14 +3,14 @@ import { SORT_OPTIONS } from '../../../components/const';
 import { CITIES } from '../../../components/const';
 import { Offer } from '../../../types/offer';
 import City from '../../../types/city';
-import { TOfferPage } from '../../../types/TOfferPage';
+import { OfferPage } from '../../../types/offer-page';
 import { FavoriteStatus } from '../../../components/const';
 import { NameSpace } from '../../../components/const';
 
 type OffersProcess = {
   city: City;
   offers: Offer[];
-  offerPage: TOfferPage | null;
+  offerPage: OfferPage | null;
   activeOffer: Offer | null;
   sortBy: string;
   nearOffers: Offer[];
@@ -43,7 +43,7 @@ export const offersProcces = createSlice({
     changeSortByValue: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
     },
-    setOfferPage: (state, action: PayloadAction<TOfferPage>) => {
+    setOfferPage: (state, action: PayloadAction<OfferPage>) => {
       state.offerPage = action.payload;
     },
     setNearOffers: (state, action: PayloadAction<Offer[]>) => {
@@ -52,10 +52,13 @@ export const offersProcces = createSlice({
     setFavorites: (state, action: PayloadAction<Offer[]>) => {
       state.favorites = action.payload;
     },
+    clearOffers: (state) => {
+      state.offers = [];
+    },
     clearOfferPage: (state, action: PayloadAction<null>) => {
       state.offerPage = action.payload;
     },
-    changeFavorites: (state, action: PayloadAction<{ offer: Offer | TOfferPage; status: FavoriteStatus }>) => {
+    changeFavorites: (state, action: PayloadAction<{ offer: Offer | OfferPage; status: FavoriteStatus }>) => {
       const index = state.offers.findIndex((offer) => action.payload.offer.id === offer.id);
       state.offers[index].isFavorite = !state.offers[index].isFavorite;
       switch (action.payload.status) {
@@ -89,5 +92,6 @@ export const {
   clearOfferPage,
   changeFavorites,
   changeNearOfferFavoriteStatus,
-  changeOfferPageFavoriteStatus
+  changeOfferPageFavoriteStatus,
+  clearOffers
 } = offersProcces.actions;

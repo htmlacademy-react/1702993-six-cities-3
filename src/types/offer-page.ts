@@ -1,4 +1,4 @@
-export type TOfferPage = {
+export type OfferPage = {
   id: string;
   title: string;
   type: string;

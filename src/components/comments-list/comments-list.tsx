@@ -6,7 +6,7 @@ type CommentsListProps = {
   comments: Comment[];
 }
 
-function CommentsList({comments}: CommentsListProps) {
+function CommentsList({comments}: CommentsListProps): JSX.Element {
 
   const sortedComments = [...comments].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENTS_COUNT);
 

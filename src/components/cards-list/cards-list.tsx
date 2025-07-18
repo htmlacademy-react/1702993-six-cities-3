@@ -12,7 +12,7 @@ type CardListProps = {
   near: boolean;
 }
 
-function CardsList({ offers, variant, near }: CardListProps) {
+function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
   const SETTINGS = {
     main: 'cities__places-list',
     offer: 'near-places__list',
@@ -27,7 +27,7 @@ function CardsList({ offers, variant, near }: CardListProps) {
       dispatch(changeActiveOffer(null));
     }), []);
 
-  const onOffer = (offer: Offer | null) => {
+  const onOfferHoverMouse = (offer: Offer | null) => {
     dispatch(changeActiveOffer(offer));
   };
 
@@ -54,7 +54,7 @@ function CardsList({ offers, variant, near }: CardListProps) {
               key={offer.id}
               offer={offer}
               offerId={offer.id}
-              onOffer={onOffer}
+              onOfferHoverMouse={onOfferHoverMouse}
               variant={variant}
               near={near}
             />

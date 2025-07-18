@@ -6,11 +6,11 @@ type OfferCardProps = {
   offer: Offer;
   offerId: string;
   variant: 'main' | 'offer' | 'favorites';
-  onOffer: (offer: Offer | null) => void;
+  onOfferHoverMouse: (offer: Offer | null) => void;
   near: boolean;
 }
 
-function PlaceCard({ offer, onOffer, variant, offerId, near }: OfferCardProps): JSX.Element {
+function OfferCard({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCardProps): JSX.Element {
 
   const SETTINGS = {
     main: {
@@ -31,13 +31,12 @@ function PlaceCard({ offer, onOffer, variant, offerId, near }: OfferCardProps): 
   };
   const handleHover = () => {
     if (variant === 'main') {
-      onOffer(offer);
+      onOfferHoverMouse(offer);
     }
-    // onOffer(offer);
   };
   const handleUnHover = () => {
     if (variant === 'main') {
-      onOffer(null);
+      onOfferHoverMouse(null);
     }
   };
 
@@ -87,4 +86,4 @@ function PlaceCard({ offer, onOffer, variant, offerId, near }: OfferCardProps): 
   );
 }
 
-export default PlaceCard;
+export default OfferCard;
