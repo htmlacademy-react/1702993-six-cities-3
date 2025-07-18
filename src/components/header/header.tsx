@@ -3,25 +3,19 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchFavoritesActions } from '../../store/thunks/favorite';
 import { logoutAction } from '../../store/thunks/authorization';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { useEffect, useState } from 'react';
-import { getUserName } from '../../services/user';
-import { getAuthorizationStatus, getUserAvatarUrl } from '../../store/slices/user-process/user-selectors';
+import { useEffect } from 'react';
+import { getAuthorizationStatus, getUserInformation } from '../../store/slices/user-process/user-selectors';
 import { getFavorites } from '../../store/slices/offers-slice/offers-selectors';
 
-function Header() {
+function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOffersCount = useAppSelector(getFavorites);
-  const [userName, setUserName] = useState('');
-  const avatar = useAppSelector(getUserAvatarUrl);
+  const user = useAppSelector(getUserInformation);
 
   useEffect(() => {
-    const name = getUserName();
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesActions());
-    }
-    if (name) {
-      setUserName(name);
     }
   }, []);
 
@@ -39,11 +33,11 @@ function Header() {
               <li className="header__nav-item user">
                 <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
-                    {authStatus === AuthorizationStatus.Auth && <img src={avatar} alt="" />}
+                    {authStatus === AuthorizationStatus.Auth && <img src={user.avatarUrl} alt="" />}
                   </div>
                   {
                     authStatus === AuthorizationStatus.Auth &&
-                    <span className="header__user-name user__name">{userName}</span>
+                    <span className="header__user-name user__name">{user.email}</span>
                   }
                   {
                     authStatus === AuthorizationStatus.Auth &&

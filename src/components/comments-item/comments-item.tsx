@@ -7,7 +7,6 @@ type CommentsItemProps = {
 function CommentsItem({ comment }: CommentsItemProps): JSX.Element {
   const commentsRatingWidth = comment.rating * 20;
   const date = new Date(comment.date);
-
   const month = date.getMonth();
   const year = date.getFullYear();
   const day = date.getDate();

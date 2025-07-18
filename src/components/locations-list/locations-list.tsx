@@ -6,7 +6,7 @@ type locationListProps = {
   currentCity: City;
 }
 
-function LocationsList({currentCity}: locationListProps) {
+function LocationsList({currentCity}: locationListProps): JSX.Element {
 
   return (
     <ul className="locations__list tabs__list">

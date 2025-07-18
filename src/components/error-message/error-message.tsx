@@ -1,8 +1,8 @@
 import { useAppSelector } from '../../store';
-import { getError } from '../../store/slices/data-slice/data-selectors';
+import { getErrorStatus } from '../../store/slices/data-slice/data-selectors';
 
 function ErrorMessage(): JSX.Element | null {
-  const error = useAppSelector(getError);
+  const error = useAppSelector(getErrorStatus);
 
   return (error)
     ?

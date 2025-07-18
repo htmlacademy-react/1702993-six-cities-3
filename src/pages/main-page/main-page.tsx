@@ -7,6 +7,7 @@ import Sort from '../../components/sort/sort';
 import { Fragment, useEffect } from 'react';
 import { getActiveOffer, getCity, getOffers } from '../../store/slices/offers-slice/offers-selectors';
 import { fetchOffersActions } from '../../store/thunks/offers';
+import { clearOffers } from '../../store/slices/offers-slice/offers-slice';
 
 
 function MainPage(): JSX.Element {
@@ -19,6 +20,9 @@ function MainPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersActions());
+    return () => {
+      dispatch(clearOffers);
+    };
   }, []);
 
   return (
@@ -56,12 +60,12 @@ function MainPage(): JSX.Element {
             <div className="cities__right-section">
               {
                 offersCount > 0 &&
-                  <Map
-                    className='cities__map'
-                    offers={currentOffers}
-                    city={currentCity}
-                    activeOfferId={activeOffer?.id}
-                  />
+                <Map
+                  className='cities__map'
+                  offers={currentOffers}
+                  city={currentCity}
+                  activeOfferId={activeOffer?.id}
+                />
               }
             </div>
           </div>

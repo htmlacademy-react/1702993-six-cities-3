@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../components/const';
 import { AuthorizationStatus } from '../../../components/const';
-
+import { User } from '../../../types/user-information';
 
 type UserProcess = {
   authorizationStatus: AuthorizationStatus;
-  userAvatar: string;
+  userInfo: User;
 }
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  userAvatar: ''
+  userInfo: {
+    email: '',
+    avatarUrl: ''
+  }
 };
 
 export const userProcces = createSlice({
@@ -20,8 +23,8 @@ export const userProcces = createSlice({
     requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;
     },
-    setUserAvatar: (state, action: PayloadAction<string>) => {
-      state.userAvatar = action.payload;
+    setUserInformation: (state, action: PayloadAction<User>) => {
+      state.userInfo = action.payload;
     }
   },
   extraReducers() {
@@ -29,4 +32,4 @@ export const userProcces = createSlice({
   }
 });
 
-export const {requireAuthorization, setUserAvatar} = userProcces.actions;
+export const {requireAuthorization, setUserInformation} = userProcces.actions;

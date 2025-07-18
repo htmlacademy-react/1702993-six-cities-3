@@ -4,11 +4,11 @@ import { changeFavoritesActions } from '../../store/thunks/favorite';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useNavigate } from 'react-router-dom';
-import { TOfferPage } from '../../types/TOfferPage';
+import { OfferPage } from '../../types/offer-page';
 import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
 
 type ButtonFavoriteProps = {
-  offer: Offer | TOfferPage;
+  offer: Offer | OfferPage;
   offerId: string;
   fullOffer: boolean;
   near: boolean;

@@ -5,7 +5,7 @@ import { SORT_OPTIONS } from '../const';
 import { changeSortByValue } from '../../store/slices/offers-slice/offers-slice';
 import { getSort } from '../../store/slices/offers-slice/offers-selectors';
 
-function Sort() {
+function Sort(): JSX.Element {
   const { isOn, toggle } = useBoolean(false);
   const selectedOption = useAppSelector(getSort);
   const dispatch = useDispatch();

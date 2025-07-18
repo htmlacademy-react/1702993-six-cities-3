@@ -2,10 +2,10 @@ import { NameSpace } from '../../../components/const';
 import City from '../../../types/city';
 import { Offer } from '../../../types/offer';
 import { State } from '../../../types/state';
-import { TOfferPage } from '../../../types/TOfferPage';
+import { OfferPage } from '../../../types/offer-page';
 
 export const getOffers = (state: State): Offer[] => state[NameSpace.Offers].offers;
-export const getOfferPage = (state: State): TOfferPage | null => state[NameSpace.Offers].offerPage;
+export const getOfferPage = (state: State): OfferPage | null => state[NameSpace.Offers].offerPage;
 export const getFavorites = (state: State): Offer[] => state[NameSpace.Offers].favorites;
 export const getNearOffers = (state: State): Offer[] => state[NameSpace.Offers].nearOffers;
 export const getActiveOffer = (state: State): Offer | null => state[NameSpace.Offers].activeOffer;
