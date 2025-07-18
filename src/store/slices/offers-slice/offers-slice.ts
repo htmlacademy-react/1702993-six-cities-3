@@ -1,23 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../components/const';
-import { OffersProcess } from '../../types/state';
-import { SORT_OPTIONS } from '../../components/const';
-import { cities } from '../../components/const';
-import { Offer } from '../../types/offer';
-import City from '../../types/city';
-import { TOfferPage } from '../../types/TOfferPage';
-import { Comment } from '../../types/comment';
-import { FavoriteStatus } from '../../components/const';
+import { SORT_OPTIONS } from '../../../components/const';
+import { CITIES } from '../../../components/const';
+import { Offer } from '../../../types/offer';
+import City from '../../../types/city';
+import { TOfferPage } from '../../../types/TOfferPage';
+import { FavoriteStatus } from '../../../components/const';
+import { NameSpace } from '../../../components/const';
+
+type OffersProcess = {
+  city: City;
+  offers: Offer[];
+  offerPage: TOfferPage | null;
+  activeOffer: Offer | null;
+  sortBy: string;
+  nearOffers: Offer[];
+  favorites: Offer[];
+}
 
 const initialState: OffersProcess = {
-  city: cities[0],
+  city: CITIES[0],
   offers: [],
   offerPage: null,
   activeOffer: null,
   sortBy: SORT_OPTIONS[0],
   nearOffers: [],
   favorites: [],
-  comments: []
 };
 
 export const offersProcces = createSlice({
@@ -39,9 +46,6 @@ export const offersProcces = createSlice({
     setOfferPage: (state, action: PayloadAction<TOfferPage>) => {
       state.offerPage = action.payload;
     },
-    setComments: (state, action: PayloadAction<Comment[]>) => {
-      state.comments = action.payload;
-    },
     setNearOffers: (state, action: PayloadAction<Offer[]>) => {
       state.nearOffers = action.payload;
     },
@@ -51,7 +55,7 @@ export const offersProcces = createSlice({
     clearOfferPage: (state, action: PayloadAction<null>) => {
       state.offerPage = action.payload;
     },
-    changeFavorites: (state, action: PayloadAction<{offer: Offer | TOfferPage; status: FavoriteStatus}>) => {
+    changeFavorites: (state, action: PayloadAction<{ offer: Offer | TOfferPage; status: FavoriteStatus }>) => {
       const index = state.offers.findIndex((offer) => action.payload.offer.id === offer.id);
       state.offers[index].isFavorite = !state.offers[index].isFavorite;
       switch (action.payload.status) {
@@ -62,10 +66,6 @@ export const offersProcces = createSlice({
           state.favorites = state.favorites.filter(({ id }) => id !== action.payload.offer.id);
       }
     },
-    changeOfferFavoriteStatus: (state, action: PayloadAction<string>) => {
-      const index = state.offers.findIndex((offer) => action.payload === offer.id);
-      state.offers[index].isFavorite = !state.offers[index].isFavorite;
-    },
     changeNearOfferFavoriteStatus: (state, action: PayloadAction<string>) => {
       const index = state.nearOffers.findIndex((offer) => action.payload === offer.id);
       state.nearOffers[index].isFavorite = !state.nearOffers[index].isFavorite;
@@ -74,7 +74,8 @@ export const offersProcces = createSlice({
       state.offerPage!.isFavorite = !state.offerPage!.isFavorite;
     }
   },
-  extraReducers() { }
+  extraReducers() {
+  }
 });
 
 export const {
@@ -83,12 +84,10 @@ export const {
   changeActiveOffer,
   changeSortByValue,
   setOfferPage,
-  setComments,
   setNearOffers,
   setFavorites,
   clearOfferPage,
   changeFavorites,
-  changeOfferFavoriteStatus,
   changeNearOfferFavoriteStatus,
   changeOfferPageFavoriteStatus
 } = offersProcces.actions;

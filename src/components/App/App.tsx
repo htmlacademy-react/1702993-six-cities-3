@@ -10,8 +10,8 @@ import { useAppSelector } from '../../store';
 import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-route';
 import browserHistory from '../../services/browser-history';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
-import { getLoadingStatus } from '../../store/data-process/data-selectors';
+import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
+import { getLoadingStatus } from '../../store/slices/data-slice/data-selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -24,7 +24,6 @@ function App(): JSX.Element {
   }
 
   return (
-    // что за HelmetProvider, который использовался в демке на 1ч:38м
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route

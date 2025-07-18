@@ -1,16 +1,23 @@
 import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../../components/const';
 import { Link, Navigate } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
-import { getFavorites } from '../../store/offers-process/offers-selectors';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
+import { getFavorites } from '../../store/slices/offers-slice/offers-selectors';
+import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
+import { useEffect } from 'react';
+import { fetchOffersActions } from '../../store/thunks/offers';
 
 function FavoritePage(): JSX.Element {
   const offers = useAppSelector(getFavorites);
   const authStatus = useAppSelector(getAuthorizationStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersActions());
+  }, []);
 
   if (authStatus === AuthorizationStatus.NoAuth) {
     return <Navigate to={AppRoute.Login} />;

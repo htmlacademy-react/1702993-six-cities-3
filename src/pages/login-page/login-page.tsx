@@ -1,11 +1,11 @@
 import { FormEvent, useRef } from 'react';
 import { AuthData } from '../../types/auth-data';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/thunks/authorization';
 import { useAppDispatch, useAppSelector } from '../../store';
 import Header from '../../components/header/header';
-import { AppRoute, AuthorizationStatus, cities } from '../../components/const';
+import { AppRoute, AuthorizationStatus, CITIES } from '../../components/const';
 import { Navigate } from 'react-router-dom';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
+import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -75,7 +75,7 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{cities[0].name}</span>
+                <span>{CITIES[0].name}</span>
               </a>
             </div>
           </section>

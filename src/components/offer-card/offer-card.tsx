@@ -6,11 +6,11 @@ type OfferCardProps = {
   offer: Offer;
   offerId: string;
   variant: 'main' | 'offer' | 'favorites';
-  handleOffer: (offer: Offer | null) => void;
+  onOffer: (offer: Offer | null) => void;
   near: boolean;
 }
 
-function PlaceCard({ offer, handleOffer, variant, offerId, near }: OfferCardProps): JSX.Element {
+function PlaceCard({ offer, onOffer, variant, offerId, near }: OfferCardProps): JSX.Element {
 
   const SETTINGS = {
     main: {
@@ -30,10 +30,15 @@ function PlaceCard({ offer, handleOffer, variant, offerId, near }: OfferCardProp
     }
   };
   const handleHover = () => {
-    handleOffer(offer);
+    if (variant === 'main') {
+      onOffer(offer);
+    }
+    // onOffer(offer);
   };
   const handleUnHover = () => {
-    handleOffer(null);
+    if (variant === 'main') {
+      onOffer(null);
+    }
   };
 
   const ratingWidth = Math.round(offer.rating) * 20;
@@ -63,7 +68,7 @@ function PlaceCard({ offer, handleOffer, variant, offerId, near }: OfferCardProp
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <ButtonFavorite offer={offer} offerId={offerId} fullOffer={false} near={near} variant='cardOffer'/>
+          <ButtonFavorite offer={offer} offerId={offerId} fullOffer={false} near={near} variant='cardOffer' />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

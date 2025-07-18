@@ -1,11 +1,11 @@
 import { Offer } from '../../types/offer';
-import { changeFavorites, changeNearOfferFavoriteStatus, changeOfferPageFavoriteStatus } from '../../store/offers-process/offers-process.slice';
-import { changeFavoritesActions } from '../../store/api-actions';
+import { changeFavorites, changeNearOfferFavoriteStatus, changeOfferPageFavoriteStatus } from '../../store/slices/offers-slice/offers-slice';
+import { changeFavoritesActions } from '../../store/thunks/favorite';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useNavigate } from 'react-router-dom';
 import { TOfferPage } from '../../types/TOfferPage';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
+import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
 
 type ButtonFavoriteProps = {
   offer: Offer | TOfferPage;
@@ -42,7 +42,6 @@ function ButtonFavorite({ offer, offerId, fullOffer = false, near = false, varia
       return;
     }
 
-    // спросить можно ли передать аргументы без объектов
     const changeFavorite = dispatch(changeFavoritesActions({ offerId: offerId, status: Number(!offer.isFavorite) }));
     dispatch(changeFavorites({ offer: offer, status: changeFavorite.arg.status }));
 

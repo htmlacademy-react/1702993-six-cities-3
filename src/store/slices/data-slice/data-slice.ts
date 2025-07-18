@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../components/const';
-import { DataProcess } from '../../types/state';
-import { NotFoundPageStatus } from '../../components/const';
+import { NameSpace } from '../../../components/const';
+import { PageStatus } from '../../../components/const';
+
+type DataProcess = {
+  error: string | null;
+  isLoadingStatus: boolean;
+  pageStatus: PageStatus;
+}
 
 const initialState: DataProcess = {
   error: null,
   isLoadingStatus: false,
-  errorStatus: NotFoundPageStatus.Unknown,
+  pageStatus: PageStatus.Unknown,
 };
 
 export const dataProcces = createSlice({
@@ -19,8 +24,8 @@ export const dataProcces = createSlice({
     setLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isLoadingStatus = action.payload;
     },
-    setErrorStatus: (state, action: PayloadAction<NotFoundPageStatus>) => {
-      state.errorStatus = action.payload;
+    setPageStatus: (state, action: PayloadAction<PageStatus>) => {
+      state.pageStatus = action.payload;
     }
   },
   extraReducers() {
@@ -28,4 +33,4 @@ export const dataProcces = createSlice({
   }
 });
 
-export const { setError, setLoadingStatus, setErrorStatus } = dataProcces.actions;
+export const { setError, setLoadingStatus, setPageStatus } = dataProcces.actions;

@@ -6,16 +6,17 @@ import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { useCallback, useEffect } from 'react';
-import { fetchCommentsActions, fetchNearOffersActions, fetchOfferPageActions } from '../../store/api-actions';
-import { AuthorizationStatus, MAX_NEAR_OFFERS, MIN_NEAR_OFFERS, NotFoundPageStatus } from '../../components/const';
+import { fetchNearOffersActions, fetchOfferPageActions, fetchOffersActions } from '../../store/thunks/offers';
+import { fetchCommentsActions } from '../../store/thunks/comments';
+import { AuthorizationStatus, MAX_NEAR_OFFERS, MIN_NEAR_OFFERS, PageStatus } from '../../components/const';
 import ErrorPage from '../error-page/error-page';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
-// import { clearOfferPage } from '../../store/action';
-import { clearOfferPage } from '../../store/offers-process/offers-process.slice';
+import { clearOfferPage } from '../../store/slices/offers-slice/offers-slice';
 import ButtonFavorite from '../../components/button-favorite/button-favorite';
-import { getComments, getNearOffers, getOfferPage, getOffers } from '../../store/offers-process/offers-selectors';
-import { getErrorStatus } from '../../store/data-process/data-selectors';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
+import { getNearOffers, getOfferPage, getOffers } from '../../store/slices/offers-slice/offers-selectors';
+import { getComments } from '../../store/slices/comments-slice/comments-selectors';
+import { getPageStatus } from '../../store/slices/data-slice/data-selectors';
+import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
 
 function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ function OfferPage(): JSX.Element {
   const offer = useAppSelector(getOfferPage);
   const comments = useAppSelector(getComments);
   const nearOffers = useAppSelector(getNearOffers).slice(MIN_NEAR_OFFERS, MAX_NEAR_OFFERS);
-  const errorStatus = useAppSelector(getErrorStatus);
+  const pageStatus = useAppSelector(getPageStatus);
   const authStatus = useAppSelector(getAuthorizationStatus);
 
   const clearOffer = useCallback(() => {
@@ -35,14 +36,15 @@ function OfferPage(): JSX.Element {
     Promise.all([
       dispatch(fetchOfferPageActions(id as string)),
       dispatch(fetchCommentsActions(id as string)),
-      dispatch(fetchNearOffersActions(id as string))
+      dispatch(fetchNearOffersActions(id as string)),
+      dispatch(fetchOffersActions())
     ]);
 
     return clearOffer();
   }, [dispatch, id, clearOffer]);
 
   if (!offer) {
-    if (!offer && errorStatus === NotFoundPageStatus.NotFound) {
+    if (!offer && pageStatus === PageStatus.NotFound) {
       return <ErrorPage />;
     }
     return <LoadingScreen />;
