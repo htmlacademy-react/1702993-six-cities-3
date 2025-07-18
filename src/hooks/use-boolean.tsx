@@ -5,7 +5,6 @@ export function useBoolean(initialValue = false) {
 
   return {
     isOn,
-    off: () => setInOn(false),
     on: () => setInOn(true),
     toggle: () => setInOn((prev) => !prev)
   };

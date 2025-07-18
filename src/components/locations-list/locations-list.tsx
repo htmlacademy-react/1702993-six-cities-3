@@ -1,5 +1,5 @@
 import LocationItem from '../location-item/location-item';
-import { cities } from '../const';
+import { CITIES } from '../const';
 import City from '../../types/city';
 
 type locationListProps = {
@@ -11,7 +11,7 @@ function LocationsList({currentCity}: locationListProps) {
   return (
     <ul className="locations__list tabs__list">
       {
-        cities.map((item) =>
+        CITIES.map((item) =>
           (
             <LocationItem
               key={item.name}

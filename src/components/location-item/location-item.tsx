@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { changeCity } from '../../store/offers-process/offers-process.slice';
+import { changeCity } from '../../store/slices/offers-slice/offers-slice';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import City from '../../types/city';

@@ -1,23 +1,25 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoritesActions } from '../../store/thunks/favorite';
+import { logoutAction } from '../../store/thunks/authorization';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useEffect, useState } from 'react';
 import { getUserName } from '../../services/user';
-import { getAuthorizationStatus } from '../../store/user-process/user-selecrors';
-import { getFavorites } from '../../store/offers-process/offers-selectors';
+import { getAuthorizationStatus, getUserAvatarUrl } from '../../store/slices/user-process/user-selectors';
+import { getFavorites } from '../../store/slices/offers-slice/offers-selectors';
 
 function Header() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOffersCount = useAppSelector(getFavorites);
-
   const [userName, setUserName] = useState('');
+  const avatar = useAppSelector(getUserAvatarUrl);
 
   useEffect(() => {
     const name = getUserName();
-
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesActions());
+    }
     if (name) {
       setUserName(name);
     }
@@ -37,6 +39,7 @@ function Header() {
               <li className="header__nav-item user">
                 <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
+                    {authStatus === AuthorizationStatus.Auth && <img src={avatar} alt="" />}
                   </div>
                   {
                     authStatus === AuthorizationStatus.Auth &&
@@ -46,20 +49,26 @@ function Header() {
                     authStatus === AuthorizationStatus.Auth &&
                     <span className="header__favorite-count">{favoritesOffersCount.length}</span>
                   }
+                  {
+                    authStatus === AuthorizationStatus.NoAuth &&
+                    <span className="header__login">Sign in</span>
+                  }
                 </Link>
               </li>
               <li className="header__nav-item">
-                <Link
-                  to={AppRoute.Main}
-                  className="header__nav-link"
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    dispatch(logoutAction());
-                    navigate(AppRoute.Login);
-                  }}
-                >
-                  <span className={`${authStatus !== AuthorizationStatus.Auth ? 'header__login' : 'header__signout'}`}>Sign {authStatus === AuthorizationStatus.Auth ? 'out' : 'in'}</span>
-                </Link>
+                {
+                  authStatus === AuthorizationStatus.Auth &&
+                  <Link
+                    to={AppRoute.Login}
+                    className="header__nav-link"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      dispatch(logoutAction());
+                    }}
+                  >
+                    <span className='header__signout'>Sign out</span>
+                  </Link>
+                }
               </li>
             </ul>
           </nav>

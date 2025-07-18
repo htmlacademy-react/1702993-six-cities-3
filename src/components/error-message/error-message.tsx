@@ -1,12 +1,23 @@
 import { useAppSelector } from '../../store';
-import { getError } from '../../store/data-process/data-selectors';
-import './error-message.css';
+import { getError } from '../../store/slices/data-slice/data-selectors';
 
 function ErrorMessage(): JSX.Element | null {
   const error = useAppSelector(getError);
 
   return (error)
-    ? <div className='error-message'>{error}</div>
+    ?
+    <div style={{
+      position: 'fixed',
+      top: '30px',
+      right: '30px',
+      padding: '10px',
+      backgroundColor: '#d95555',
+      color: 'white',
+      borderRadius: '5px'
+    }}
+    >
+      {error}
+    </div>
     : null;
 }
 

@@ -2,8 +2,8 @@ import { useDispatch } from 'react-redux';
 import { useBoolean } from '../../hooks/use-boolean';
 import { useAppSelector } from '../../store';
 import { SORT_OPTIONS } from '../const';
-import { changeSortByValue } from '../../store/offers-process/offers-process.slice';
-import { getSort } from '../../store/offers-process/offers-selectors';
+import { changeSortByValue } from '../../store/slices/offers-slice/offers-slice';
+import { getSort } from '../../store/slices/offers-slice/offers-selectors';
 
 function Sort() {
   const { isOn, toggle } = useBoolean(false);

@@ -1,9 +1,10 @@
 import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/offer';
 import { useDispatch } from 'react-redux';
-import { changeActiveOffer } from '../../store/offers-process/offers-process.slice';
+import { changeActiveOffer } from '../../store/slices/offers-slice/offers-slice';
 import { useAppSelector } from '../../store';
-import { getSort } from '../../store/offers-process/offers-selectors';
+import { getSort } from '../../store/slices/offers-slice/offers-selectors';
+import { useEffect } from 'react';
 
 type CardListProps = {
   offers: Offer[];
@@ -19,21 +20,26 @@ function CardsList({ offers, variant, near }: CardListProps) {
   };
   const selecredSortBy = useAppSelector(getSort);
   let sortedOffers = offers;
-
   const dispatch = useDispatch();
-  const handleOffer = (offer: Offer | null) => {
+
+  useEffect(() =>
+    (() => {
+      dispatch(changeActiveOffer(null));
+    }), []);
+
+  const onOffer = (offer: Offer | null) => {
     dispatch(changeActiveOffer(offer));
   };
 
-  if(selecredSortBy === 'Price: low to high') {
+  if (selecredSortBy === 'Price: low to high') {
     sortedOffers = [...offers].sort((a, b) => a.price - b.price);
   }
 
-  if(selecredSortBy === 'Price: high to low') {
+  if (selecredSortBy === 'Price: high to low') {
     sortedOffers = [...offers].sort((a, b) => b.price - a.price);
   }
 
-  if(selecredSortBy === 'Top rated first') {
+  if (selecredSortBy === 'Top rated first') {
     sortedOffers = [...offers].sort((a, b) => b.rating - a.rating);
   }
 
@@ -48,7 +54,7 @@ function CardsList({ offers, variant, near }: CardListProps) {
               key={offer.id}
               offer={offer}
               offerId={offer.id}
-              handleOffer={handleOffer}
+              onOffer={onOffer}
               variant={variant}
               near={near}
             />

@@ -1,6 +1,8 @@
-import { Fragment, ReactEventHandler, useState } from 'react';
-import { useAppDispatch } from '../../store';
-import { postCommentAction } from '../../store/api-actions';
+import { Fragment, ReactEventHandler, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { reviewActions, setStatusIdle } from '../../store/slices/comments-slice/comments-slice';
+import { getCommentStatus } from '../../store/slices/comments-slice/comments-selectors';
+import { CommentsStatus } from '../const';
 
 type TypeChangeListener = ReactEventHandler<HTMLInputElement | HTMLTextAreaElement>
 type ReviewFormProps = {
@@ -16,6 +18,7 @@ const rating = [
 ];
 
 function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
+
   const [review, setComment] = useState({ rating: 0, comment: '' });
   const listenerFormChange: TypeChangeListener = (event) => {
     const { name, value } = event.currentTarget;
@@ -23,6 +26,14 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   };
 
   const dispatch = useAppDispatch();
+  const status = useAppSelector(getCommentStatus);
+
+  useEffect(() => {
+    if (status === CommentsStatus.Succes) {
+      setComment({ rating: 0, comment: '' });
+      setStatusIdle();
+    }
+  }, [status]);
 
   return (
     <form className="reviews__form form" action="#" method="post">
@@ -36,8 +47,10 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
                 name="rating"
                 value={value}
                 id={`${value}-stars`}
+                checked={value === Number(review.rating)}
                 type="radio"
                 onChange={listenerFormChange}
+                disabled={status === CommentsStatus.Pending}
               />
               <label
                 htmlFor={`${value}-stars`}
@@ -55,13 +68,18 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
+        value={review.comment}
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={listenerFormChange}
+        disabled={status === CommentsStatus.Pending}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
+          {
+            status === CommentsStatus.Failed && 'Failed to send comment, please try again. '
+          }
           To submit review please make sure to set
           <span className="reviews__star">rating</span>
           and describe your stay with at least
@@ -70,10 +88,10 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.comment.length < 50 || review.comment.length > 300 || review.rating === 0}
+          disabled={review.comment.length < 50 || review.comment.length > 300 || review.rating === 0 || status === CommentsStatus.Pending}
           onClick={(evt) => {
             evt.preventDefault();
-            dispatch(postCommentAction({ review, offerId }));
+            dispatch(reviewActions.postCommentAction({ review, offerId }));
           }}
         >
           Submit

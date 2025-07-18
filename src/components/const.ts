@@ -14,7 +14,14 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export enum NotFoundPageStatus {
+export enum CommentsStatus {
+  Unkwnown = 'UNKWNOWN',
+  Pending = 'PENDING',
+  Succes = 'SUCCES',
+  Failed = 'FAILED'
+}
+
+export enum PageStatus {
   Unknown = 'UNKNOWN',
   NotFound = 'ERROR',
   Succes = 'SUCCES'
@@ -26,6 +33,19 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
   Favorite = '/favorite'
+}
+
+export enum NameSpace {
+  Data = 'DATA',
+  Offers = 'OFFERS',
+  User = 'USER',
+  Favorite = 'FAVORITE',
+  Reviews = 'REVIEWS'
+}
+
+export enum FavoriteStatus {
+  Add = 1,
+  Remove = 0
 }
 
 export const URL_MARKER_DEFAULT = '../../public/img/pin.svg';
@@ -40,7 +60,7 @@ export const SORT_OPTIONS = [
 
 export const TIMEOUT_SHOW_ERROR = 5000;
 
-export const cities: City[] = [
+export const CITIES: City[] = [
   {
     name: 'Paris',
     location: {
@@ -91,22 +111,6 @@ export const cities: City[] = [
   },
 ];
 
-export const MIN_NEAR_OFFERS = 0;
-export const MAX_NEAR_OFFERS = 3;
-export enum FavoriteStatus {
-  Add = 1,
-  Remove = 0
-}
-
-export const MAX_COMMENTS_COUNT = 10;
-
-export enum NameSpace {
-  Data = 'DATA',
-  Offers = 'OFFERS',
-  User = 'USER',
-  Bookmark = 'BOOKMARK'
-}
-
 export const MONTHS_LIST = [
   'January',
   'February',
@@ -121,3 +125,9 @@ export const MONTHS_LIST = [
   'November',
   'December'
 ];
+
+
+export const MIN_NEAR_OFFERS = 0;
+export const MAX_NEAR_OFFERS = 3;
+
+export const MAX_COMMENTS_COUNT = 10;

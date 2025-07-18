@@ -2,10 +2,12 @@ import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations-list/locations-list';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import Sort from '../../components/sort/sort';
-import { Fragment } from 'react';
-import { getActiveOffer, getCity, getOffers } from '../../store/offers-process/offers-selectors';
+import { Fragment, useEffect } from 'react';
+import { getActiveOffer, getCity, getOffers } from '../../store/slices/offers-slice/offers-selectors';
+import { fetchOffersActions } from '../../store/thunks/offers';
+
 
 function MainPage(): JSX.Element {
   const currentCity = useAppSelector(getCity);
@@ -13,6 +15,11 @@ function MainPage(): JSX.Element {
   const currentOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const offersCount = currentOffers.length;
   const activeOffer = useAppSelector(getActiveOffer);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersActions());
+  }, []);
 
   return (
     <div className="page page--gray page--main">
