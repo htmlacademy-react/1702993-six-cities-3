@@ -66,6 +66,8 @@ function LoginPage(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  pattern='^(?=.*[a-zA-Z])(?=.*\d)[^\s]*$'
+                  title='Use letters and numbers!'
                   required
                 />
               </div>

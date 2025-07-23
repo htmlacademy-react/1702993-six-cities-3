@@ -5,7 +5,6 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  Error = '/error',
 }
 
 export enum AuthorizationStatus {
@@ -16,6 +15,13 @@ export enum AuthorizationStatus {
 
 export enum CommentsStatus {
   Unkwnown = 'UNKWNOWN',
+  Pending = 'PENDING',
+  Succes = 'SUCCES',
+  Failed = 'FAILED'
+}
+
+export enum FavoritesOffersStatus {
+  Idle = 'IDLE',
   Pending = 'PENDING',
   Succes = 'SUCCES',
   Failed = 'FAILED'
@@ -129,5 +135,6 @@ export const MONTHS_LIST = [
 
 export const MIN_NEAR_OFFERS = 0;
 export const MAX_NEAR_OFFERS = 3;
-
+export const MAX_RATING = 5;
+export const MAX_PHOTOS = 6;
 export const MAX_COMMENTS_COUNT = 10;

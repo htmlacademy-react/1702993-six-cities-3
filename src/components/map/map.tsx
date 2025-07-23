@@ -6,7 +6,7 @@ import {
 } from '../const';
 import { useEffect, useRef } from 'react';
 import { Offer } from '../../types/offer';
-import UseMap from '../../hooks/use-map';
+import useMap from '../../hooks/use-map';
 import City from '../../types/city';
 
 
@@ -19,18 +19,14 @@ type MapProps = {
 
 function Map({ className, offers, activeOfferId, city }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const map = UseMap({ mapRef, city });
+  const map = useMap({ mapRef, city });
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: URL_MARKER_DEFAULT
   });
 
   const activeMarkerIcon = leaflet.icon({
-    iconUrl: URL_MARKER_ACTIVE,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: URL_MARKER_ACTIVE
   });
 
   const markerLayer = useRef<LayerGroup>(leaflet.layerGroup());

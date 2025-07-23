@@ -6,6 +6,8 @@ import City from '../../../types/city';
 import { OfferPage } from '../../../types/offer-page';
 import { FavoriteStatus } from '../../../components/const';
 import { NameSpace } from '../../../components/const';
+import { fetchFavoritesActions } from '../../thunks/favorite';
+import { FavoritesOffersStatus } from '../../../components/const';
 
 type OffersProcess = {
   city: City;
@@ -15,6 +17,7 @@ type OffersProcess = {
   sortBy: string;
   nearOffers: Offer[];
   favorites: Offer[];
+  favoriteOffersStatus: FavoritesOffersStatus;
 }
 
 const initialState: OffersProcess = {
@@ -25,6 +28,7 @@ const initialState: OffersProcess = {
   sortBy: SORT_OPTIONS[0],
   nearOffers: [],
   favorites: [],
+  favoriteOffersStatus: FavoritesOffersStatus.Idle
 };
 
 export const offersProcces = createSlice({
@@ -77,7 +81,17 @@ export const offersProcces = createSlice({
       state.offerPage!.isFavorite = !state.offerPage!.isFavorite;
     }
   },
-  extraReducers() {
+  extraReducers(builder) {
+    builder
+      .addCase(fetchFavoritesActions.pending, (state) => {
+        state.favoriteOffersStatus = FavoritesOffersStatus.Pending;
+      })
+      .addCase(fetchFavoritesActions.fulfilled, (state) => {
+        state.favoriteOffersStatus = FavoritesOffersStatus.Succes;
+      })
+      .addCase(fetchFavoritesActions.rejected, (state) => {
+        state.favoriteOffersStatus = FavoritesOffersStatus.Failed;
+      });
   }
 });
 
