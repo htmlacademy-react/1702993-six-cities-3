@@ -19,6 +19,11 @@ const rating = [
 
 function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
+  const SETTINGS = {
+    minLength: 50,
+    maxLength: 300
+  };
+
   const [review, setComment] = useState({ rating: 0, comment: '' });
   const listenerFormChange: TypeChangeListener = (event) => {
     const { name, value } = event.currentTarget;
@@ -80,15 +85,12 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
           {
             status === CommentsStatus.Failed && 'Failed to send comment, please try again. '
           }
-          To submit review please make sure to set
-          <span className="reviews__star">rating</span>
-          and describe your stay with at least
-          <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star"> rating</span> and describe your stay with at least <b className="reviews__text-amount"> {SETTINGS.minLength} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={review.comment.length < 50 || review.comment.length > 300 || review.rating === 0 || status === CommentsStatus.Pending}
+          disabled={review.comment.length < SETTINGS.minLength || review.comment.length > SETTINGS.maxLength || review.rating === 0 || status === CommentsStatus.Pending}
           onClick={(evt) => {
             evt.preventDefault();
             dispatch(reviewActions.postCommentAction({ review, offerId }));

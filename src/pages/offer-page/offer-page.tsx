@@ -1,4 +1,4 @@
-import ReviewForm from '../../components/comment-form/comment-form';
+import ReviewForm from '../../components/review-form/review-form';
 import { useParams } from 'react-router-dom';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { useCallback, useEffect } from 'react';
 import { fetchNearOffersActions, fetchOfferPageActions, fetchOffersActions } from '../../store/thunks/offers';
 import { fetchCommentsActions } from '../../store/thunks/comments';
-import { AuthorizationStatus, MAX_NEAR_OFFERS, MIN_NEAR_OFFERS, PageStatus } from '../../components/const';
+import { AuthorizationStatus, MAX_NEAR_OFFERS, MAX_PHOTOS, MIN_NEAR_OFFERS, PageStatus } from '../../components/const';
 import ErrorPage from '../error-page/error-page';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { clearOfferPage } from '../../store/slices/offers-slice/offers-slice';
@@ -17,8 +17,10 @@ import { getNearOffers, getOfferPage, getOffers } from '../../store/slices/offer
 import { getComments } from '../../store/slices/comments-slice/comments-selectors';
 import { getPageStatus } from '../../store/slices/data-slice/data-selectors';
 import { getAuthorizationStatus } from '../../store/slices/user-process/user-selectors';
+import { getRatingWidth } from '../../utils';
 
 function OfferPage(): JSX.Element {
+
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const offers = useAppSelector(getOffers);
@@ -32,14 +34,17 @@ function OfferPage(): JSX.Element {
     dispatch(clearOfferPage(null));
   }, [dispatch]);
 
+
   useEffect(() => {
     Promise.all([
       dispatch(fetchOfferPageActions(id as string)),
       dispatch(fetchCommentsActions(id as string)),
       dispatch(fetchNearOffersActions(id as string)),
-      dispatch(fetchOffersActions())
     ]);
 
+    if (offers.length === 0) {
+      dispatch(fetchOffersActions());
+    }
     return clearOffer();
   }, [dispatch, id, clearOffer]);
 
@@ -53,7 +58,7 @@ function OfferPage(): JSX.Element {
   const { city, bedrooms, description, goods, host, images, isPremium, maxAdults, price, title, type, rating } = offer;
   const currentOffer = offers.filter((offerItem) => offerItem.id === offer.id);
   const nearOffersPlusCurrent = nearOffers.concat(currentOffer);
-  const ratingWidth = Math.round(offer.rating) * 20;
+  const ratingWidth = getRatingWidth(rating);
 
   return (
     <div className="page">
@@ -63,7 +68,7 @@ function OfferPage(): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                images.slice(0, 6).map((item) =>
+                images.slice(0, MAX_PHOTOS).map((item) =>
                   (
                     <div key={item} className="offer__image-wrapper">
                       <img className="offer__image" src={item} alt="Photo studio" />

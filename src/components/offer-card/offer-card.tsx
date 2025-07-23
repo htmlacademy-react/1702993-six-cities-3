@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import ButtonFavorite from '../button-favorite/button-favorite';
+import { getRatingWidth } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
@@ -40,7 +41,10 @@ function OfferCard({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCa
     }
   };
 
-  const ratingWidth = Math.round(offer.rating) * 20;
+  const ratingWidth = getRatingWidth(offer.rating);
+
+  const {type} = offer;
+  const offerType = type.slice(0, 1).toUpperCase() + type.slice(1);
 
   return (
     <article
@@ -80,7 +84,7 @@ function OfferCard({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCa
             {offer.title}
           </Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{offerType}</p>
       </div>
     </article >
   );

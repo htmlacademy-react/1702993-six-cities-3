@@ -2,19 +2,20 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchFavoritesActions } from '../../store/thunks/favorite';
 import { logoutAction } from '../../store/thunks/authorization';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus, FavoritesOffersStatus } from '../const';
 import { useEffect } from 'react';
 import { getAuthorizationStatus, getUserInformation } from '../../store/slices/user-process/user-selectors';
-import { getFavorites } from '../../store/slices/offers-slice/offers-selectors';
+import { getFavorites, getFavoritesOffersStatus } from '../../store/slices/offers-slice/offers-selectors';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOffersCount = useAppSelector(getFavorites);
   const user = useAppSelector(getUserInformation);
+  const favoritesOffersStatus = useAppSelector(getFavoritesOffersStatus);
 
   useEffect(() => {
-    if (authStatus === AuthorizationStatus.Auth) {
+    if (authStatus === AuthorizationStatus.Auth && favoritesOffersStatus !== FavoritesOffersStatus.Succes) {
       dispatch(fetchFavoritesActions());
     }
   }, []);

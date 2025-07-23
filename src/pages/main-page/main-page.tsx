@@ -7,7 +7,6 @@ import Sort from '../../components/sort/sort';
 import { Fragment, useEffect } from 'react';
 import { getActiveOffer, getCity, getOffers } from '../../store/slices/offers-slice/offers-selectors';
 import { fetchOffersActions } from '../../store/thunks/offers';
-import { clearOffers } from '../../store/slices/offers-slice/offers-slice';
 
 
 function MainPage(): JSX.Element {
@@ -19,10 +18,9 @@ function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchOffersActions());
-    return () => {
-      dispatch(clearOffers);
-    };
+    if (offers.length === 0) {
+      dispatch(fetchOffersActions());
+    }
   }, []);
 
   return (

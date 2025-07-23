@@ -7,7 +7,7 @@ type UseMapProps = {
   city: City;
 }
 
-function UseMap({ mapRef, city }: UseMapProps) {
+function useMap({ mapRef, city }: UseMapProps) {
 
   const isRenderedRef = useRef<boolean>(false);
   const [map, setMap] = useState<Map | null>(null);
@@ -37,4 +37,4 @@ function UseMap({ mapRef, city }: UseMapProps) {
 
   return map;
 }
-export default UseMap;
+export default useMap;

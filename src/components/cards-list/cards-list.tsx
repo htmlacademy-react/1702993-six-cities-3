@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { changeActiveOffer } from '../../store/slices/offers-slice/offers-slice';
 import { useAppSelector } from '../../store';
 import { getSort } from '../../store/slices/offers-slice/offers-selectors';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 type CardListProps = {
   offers: Offer[];
@@ -27,9 +27,10 @@ function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
       dispatch(changeActiveOffer(null));
     }), []);
 
-  const onOfferHoverMouse = (offer: Offer | null) => {
+  const onOfferHoverMouse = useCallback((offer: Offer | null) => {
     dispatch(changeActiveOffer(offer));
-  };
+  }, []);
+
 
   if (selecredSortBy === 'Price: low to high') {
     sortedOffers = [...offers].sort((a, b) => a.price - b.price);

@@ -7,6 +7,8 @@ import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { removeToken, saveToken } from '../../services/token';
 import { User } from '../../types/user-information';
+import { fetchOffersActions } from './offers';
+import { setLoadingStatus } from '../slices/data-slice/data-slice';
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -34,6 +36,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     saveToken(data.token);
     dispatch(setUserInformation({email: data.email, avatarUrl: data.avatarUrl}));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(fetchOffersActions());
   }
 );
 
@@ -43,8 +46,11 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }>(
   'logout',
   async (_arg, { dispatch, extra: api }) => {
+    dispatch(setLoadingStatus(true));
     await api.delete(APIRoute.Logout);
     removeToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(fetchOffersActions());
+    dispatch(setLoadingStatus(false));
   }
 );
