@@ -49,6 +49,6 @@ function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
   );
 }
 
-const MemorizedCardsList = memo(CardsList, (prevProps, nextProps) => prevProps.offers === nextProps.offers);
+const MemorizedCardsList = memo(CardsList);
 
 export default MemorizedCardsList;
