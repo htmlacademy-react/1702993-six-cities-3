@@ -18,24 +18,14 @@ export const selectedSortedOffers = createSelector(
   [getOffers, getSort],
   (offers, sortBy) => {
     switch (sortBy) {
-      case 'Price: low to hight':
+      case 'Price: low to high':
         return [...offers].sort((a, b) => a.price - b.price);
       case 'Price: high to low':
         return [...offers].sort((a, b) => b.price - a.price);
       case 'Top rated first':
         return [...offers].sort((a, b) => b.rating - a.rating);
+      default:
+        return offers;
     }
   }
 );
-
-// if (selecredSortBy === 'Price: low to high') {
-//     sortedOffers = [...offers].sort((a, b) => a.price - b.price);
-//   }
-
-//   if (selecredSortBy === 'Price: high to low') {
-//     sortedOffers = [...offers].sort((a, b) => b.price - a.price);
-//   }
-
-//   if (selecredSortBy === 'Top rated first') {
-//     sortedOffers = [...offers].sort((a, b) => b.rating - a.rating);
-//   }

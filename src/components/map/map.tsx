@@ -54,4 +54,5 @@ function Map({ className, offers, activeOfferId, city }: MapProps) {
 
   return <section className={`map ${className}`} ref={mapRef} />;
 }
+
 export default Map;
