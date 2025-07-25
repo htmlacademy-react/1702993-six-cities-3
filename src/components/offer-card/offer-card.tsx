@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import ButtonFavorite from '../button-favorite/button-favorite';
 import { getRatingWidth } from '../../utils';
+import { memo } from 'react';
 
 type OfferCardProps = {
   offer: Offer;
@@ -11,7 +12,7 @@ type OfferCardProps = {
   near: boolean;
 }
 
-function OfferCard({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCardProps): JSX.Element {
+function OfferCard ({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCardProps): JSX.Element {
 
   const SETTINGS = {
     main: {
@@ -89,5 +90,6 @@ function OfferCard({ offer, onOfferHoverMouse, variant, offerId, near }: OfferCa
     </article >
   );
 }
+const MemorizedOfferCard = memo(OfferCard);
 
-export default OfferCard;
+export default MemorizedOfferCard;

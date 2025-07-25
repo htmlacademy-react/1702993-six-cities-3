@@ -2,9 +2,7 @@ import OfferCard from '../offer-card/offer-card';
 import { Offer } from '../../types/offer';
 import { useDispatch } from 'react-redux';
 import { changeActiveOffer } from '../../store/slices/offers-slice/offers-slice';
-import { useAppSelector } from '../../store';
-import { getSort } from '../../store/slices/offers-slice/offers-selectors';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, memo } from 'react';
 
 type CardListProps = {
   offers: Offer[];
@@ -18,8 +16,7 @@ function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
     offer: 'near-places__list',
     favorites: 'favorites__places'
   };
-  const selecredSortBy = useAppSelector(getSort);
-  let sortedOffers = offers;
+
   const dispatch = useDispatch();
 
   useEffect(() =>
@@ -31,25 +28,12 @@ function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
     dispatch(changeActiveOffer(offer));
   }, []);
 
-
-  if (selecredSortBy === 'Price: low to high') {
-    sortedOffers = [...offers].sort((a, b) => a.price - b.price);
-  }
-
-  if (selecredSortBy === 'Price: high to low') {
-    sortedOffers = [...offers].sort((a, b) => b.price - a.price);
-  }
-
-  if (selecredSortBy === 'Top rated first') {
-    sortedOffers = [...offers].sort((a, b) => b.rating - a.rating);
-  }
-
   return (
     <div
       className={`${SETTINGS[variant]} places__list tabs__content`}
     >
       {
-        sortedOffers.map((offer) =>
+        offers.map((offer) =>
           (
             <OfferCard
               key={offer.id}
@@ -65,4 +49,6 @@ function CardsList({ offers, variant, near }: CardListProps): JSX.Element {
   );
 }
 
-export default CardsList;
+const MemorizedCardsList = memo(CardsList, (prevProps, nextProps) => prevProps.offers === nextProps.offers);
+
+export default MemorizedCardsList;

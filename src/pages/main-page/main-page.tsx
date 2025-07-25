@@ -4,10 +4,9 @@ import Header from '../../components/header/header';
 import LocationsList from '../../components/locations-list/locations-list';
 import { useAppDispatch, useAppSelector } from '../../store';
 import Sort from '../../components/sort/sort';
-import { Fragment, useEffect } from 'react';
-import { getActiveOffer, getCity, getOffers } from '../../store/slices/offers-slice/offers-selectors';
+import { Fragment, useEffect, useMemo } from 'react';
+import { getActiveOffer, getCity, getOffers, selectedSortedOffers } from '../../store/slices/offers-slice/offers-selectors';
 import { fetchOffersActions } from '../../store/thunks/offers';
-
 
 function MainPage(): JSX.Element {
   const currentCity = useAppSelector(getCity);
@@ -16,6 +15,9 @@ function MainPage(): JSX.Element {
   const offersCount = currentOffers.length;
   const activeOffer = useAppSelector(getActiveOffer);
   const dispatch = useAppDispatch();
+
+  const sortedOffers = useAppSelector(selectedSortedOffers);
+  const sortedCurrentOffers = useMemo(() => sortedOffers.filter((offer) => offer.city.name === currentCity.name), [sortedOffers, currentCity]);
 
   useEffect(() => {
     if (offers.length === 0) {
@@ -49,7 +51,7 @@ function MainPage(): JSX.Element {
                   <b className="places__found">{offersCount} {offersCount > 1 ? 'places' : 'place'} to stay in {currentCity.name}</b>
                   <Sort />
                   <CardsList
-                    offers={currentOffers}
+                    offers={sortedCurrentOffers}
                     variant='main'
                     near={false}
                   />
